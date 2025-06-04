@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mastering_course/widget/home_page.dart';
+import 'package:flutter_mastering_course/widget/welcome_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(useMaterial3: true),
-      home: HomePage(),
+      home: WelcomeScreen(),
     );
   }
 }
