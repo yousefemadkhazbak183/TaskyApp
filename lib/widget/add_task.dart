@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_mastering_course/model/task_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AddTask extends StatefulWidget {
   AddTask({super.key});
@@ -11,8 +15,7 @@ class _AddTaskState extends State<AddTask> {
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
 
   /// ToDO: Dispose this controllers
-  final TextEditingController addTaskController =
-      TextEditingController();
+  final TextEditingController addTaskController = TextEditingController();
 
   final TextEditingController addTaskDescriptionController =
       TextEditingController();
@@ -28,17 +31,11 @@ class _AddTaskState extends State<AddTask> {
         backgroundColor: Color(0xFF181818),
         iconTheme: IconThemeData(color: Color(0xFFFFFCFC)),
         title: Text('New Task'),
-        titleTextStyle: TextStyle(
-          color: Color(0xFFFFFCFC),
-          fontSize: 20,
-        ),
+        titleTextStyle: TextStyle(color: Color(0xFFFFFCFC), fontSize: 20),
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 8,
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: Form(
             key: _key,
             child: Column(
@@ -61,11 +58,8 @@ class _AddTaskState extends State<AddTask> {
                           controller: addTaskController,
                           style: TextStyle(color: Colors.white),
                           decoration: InputDecoration(
-                            hintText:
-                                'Finish UI design for login screen',
-                            hintStyle: TextStyle(
-                              color: Color(0xFF6D6D6D),
-                            ),
+                            hintText: 'Finish UI design for login screen',
+                            hintStyle: TextStyle(color: Color(0xFF6D6D6D)),
                             filled: true,
                             fillColor: Color(0xFF282828),
                             border: OutlineInputBorder(
@@ -74,8 +68,7 @@ class _AddTaskState extends State<AddTask> {
                             ),
                           ),
                           validator: (String? value) {
-                            if (value == null ||
-                                value.trim().isEmpty) {
+                            if (value == null || value.trim().isEmpty) {
                               return 'Please enter task name';
                             }
                             return null;
@@ -97,9 +90,7 @@ class _AddTaskState extends State<AddTask> {
                           decoration: InputDecoration(
                             hintText:
                                 'Finish onboarding UI and hand off to \n devs by Thursday.',
-                            hintStyle: TextStyle(
-                              color: Color(0xFF6D6D6D),
-                            ),
+                            hintStyle: TextStyle(color: Color(0xFF6D6D6D)),
                             filled: true,
                             fillColor: Color(0xFF282828),
                             border: OutlineInputBorder(
@@ -108,8 +99,7 @@ class _AddTaskState extends State<AddTask> {
                             ),
                           ),
                           validator: (String? value) {
-                            if (value == null ||
-                                value.trim().isEmpty) {
+                            if (value == null || value.trim().isEmpty) {
                               return 'Please enter task description';
                             }
                             return null;
@@ -117,8 +107,7 @@ class _AddTaskState extends State<AddTask> {
                         ),
                         SizedBox(height: 20),
                         Row(
-                          mainAxisAlignment:
-                              MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
                               'High Priority',
@@ -146,13 +135,27 @@ class _AddTaskState extends State<AddTask> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFF15B86C),
                     foregroundColor: Color(0xFFFFFCFC),
-                    fixedSize: Size(
-                      MediaQuery.of(context).size.width,
-                      40,
-                    ),
+                    fixedSize: Size(MediaQuery.of(context).size.width, 40),
                   ),
-                  onPressed: () {
-                    if (_key.currentState?.validate() ?? false) {}
+                  onPressed: () async {
+                    if (_key.currentState?.validate() ?? false) {
+                      TaskModel model = TaskModel(
+                        taskName: addTaskController.text,
+                        taskDescription: addTaskDescriptionController.text,
+                        isHighPriority: isHighPriority,
+                      );
+
+                      final pref = await SharedPreferences.getInstance();
+                      final taskJson = pref.getString('task');
+                      List<dynamic> listTask = [];
+                      if (taskJson != null) {
+                        listTask = jsonDecode(taskJson);
+                      }
+                      listTask.add(model.toJson());
+
+                      final taskEncode = jsonEncode(listTask);
+                      await pref.setString("task", taskEncode);
+                    }
                   },
                   label: Text('Add Task'),
                   icon: Icon(Icons.add),
