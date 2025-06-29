@@ -75,13 +75,6 @@ class _AddTaskState extends State<AddTask> {
                           },
                         ),
                         SizedBox(height: 20),
-                        Text(
-                          'Task Description',
-                          style: TextStyle(
-                            color: Color(0xFFFFFCFC),
-                            fontSize: 16,
-                          ),
-                        ),
                         SizedBox(height: 8),
                         TextFormField(
                           controller: addTaskDescriptionController,
@@ -98,12 +91,6 @@ class _AddTaskState extends State<AddTask> {
                               borderSide: BorderSide.none,
                             ),
                           ),
-                          validator: (String? value) {
-                            if (value == null || value.trim().isEmpty) {
-                              return 'Please enter task description';
-                            }
-                            return null;
-                          },
                         ),
                         SizedBox(height: 20),
                         Row(
@@ -155,6 +142,7 @@ class _AddTaskState extends State<AddTask> {
 
                       final taskEncode = jsonEncode(listTask);
                       await pref.setString("task", taskEncode);
+                      Navigator.of(context).pop();
                     }
                   },
                   label: Text('Add Task'),

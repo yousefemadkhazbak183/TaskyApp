@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mastering_course/widget/home_screen.dart';
+import 'package:flutter_mastering_course/widget/main_screen.dart';
 import 'package:flutter_mastering_course/widget/welcome_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(useMaterial3: true),
 
-      home: username == null ? WelcomeScreen() : HomeScreen(),
+      home: username == null ? WelcomeScreen() : MainScreen(),
     );
   }
 }
