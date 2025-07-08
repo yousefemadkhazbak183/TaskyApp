@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mastering_course/widget/home_screen.dart';
+import 'package:flutter_mastering_course/screens/main_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TextFormFieldWidget extends StatelessWidget {
@@ -55,7 +55,7 @@ class TextFormFieldWidget extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (BuildContext context) {
-                      return HomeScreen();
+                      return MainScreen();
                     },
                   ),
                 );

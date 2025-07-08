@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mastering_course/widget/home_screen.dart';
-import 'package:flutter_mastering_course/widget/profile_screen.dart';
-import 'package:flutter_mastering_course/widget/task_completed_screen.dart';
-import 'package:flutter_mastering_course/widget/todo_screen.dart';
+import 'package:flutter_mastering_course/screens/home_screen.dart';
+import 'package:flutter_mastering_course/screens/profile_screen.dart' show ProfileScreen;
+import 'package:flutter_mastering_course/screens/task_completed_screen.dart';
+import 'package:flutter_mastering_course/screens/todo_screen.dart';
 import 'package:flutter_svg/svg.dart';
 
 class MainScreen extends StatefulWidget {
