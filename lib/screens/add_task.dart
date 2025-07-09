@@ -25,8 +25,10 @@ class _AddTaskState extends State<AddTask> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(centerTitle: false, title: Text('New Task'),
-      iconTheme: IconThemeData(color: Color(0xFFFFFCFC)),
+      appBar: AppBar(
+        centerTitle: false,
+        title: Text('New Task'),
+        iconTheme: IconThemeData(color: Color(0xFFFFFCFC)),
       ),
       body: SafeArea(
         child: Padding(
@@ -100,7 +102,7 @@ class _AddTaskState extends State<AddTask> {
                             ),
                             Switch(
                               value: isHighPriority,
-                              activeTrackColor: Color(0xFF15B86C),
+
                               onChanged: (value) {
                                 setState(() {
                                   isHighPriority = value;
@@ -121,7 +123,6 @@ class _AddTaskState extends State<AddTask> {
                   ),
                   onPressed: () async {
                     if (_key.currentState?.validate() ?? false) {
-
                       final pref = await SharedPreferences.getInstance();
                       final taskJson = pref.getString('task');
 
@@ -130,13 +131,11 @@ class _AddTaskState extends State<AddTask> {
                         listTask = jsonDecode(taskJson);
                       }
                       TaskModel model = TaskModel(
-                        id: listTask.length +1,
+                        id: listTask.length + 1,
                         taskName: addTaskController.text,
                         taskDescription: addTaskDescriptionController.text,
                         isHighPriority: isHighPriority,
                       );
-
-
 
                       listTask.add(model.toJson());
 
