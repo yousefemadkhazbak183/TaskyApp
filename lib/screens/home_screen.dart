@@ -48,11 +48,10 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         tasks = taskAfterDecode.map((e) => TaskModel.fromJson(e)).toList();
       });
-      
     }
     setState(() {
-        isLoading = false;
-      });
+      isLoading = false;
+    });
   }
 
   @override
@@ -68,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   // CircleAvatar(
                   //   backgroundImage: AssetImage(
-                  //     'assets/images/welcom.svg',
+                  //     'assets/images/welcome.svg',
                   //   ),
                   // ),
                   SizedBox(width: 8),
@@ -125,7 +124,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       )
                     : TaskListWidgets(
-
                         tasks: tasks,
                         onTap: (bool? value, int? index) async {
                           setState(() {
@@ -137,9 +135,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               .toList();
                           final taskEncode = jsonEncode(updatedTask);
                           pref.setString("task", taskEncode);
-
                         },
-
                       ),
               ),
             ],

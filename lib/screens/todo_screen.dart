@@ -37,43 +37,59 @@ class _TodoScreenState extends State<TodoScreen> {
         tasks = taskAfterDecode.map((e) => TaskModel.fromJson(e)).toList();
         tasks = tasks.where((element) => element.isDone == false).toList();
       });
-      
     }
     setState(() {
-        isLoading = false;
-      });
+      isLoading = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('To Do Tasks')),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: isLoading
-            ? Center(child: CircularProgressIndicator(color: Colors.white))
-            : TaskListWidgets(
-                tasks: tasks,
-                onTap: (value, index) async {
-                  setState(() {
-                    tasks[index!].isDone = value ?? false;
-                  });
-                  final pref = await SharedPreferences.getInstance();
-                  
-                  final allData = pref.getString('task');
-                  if (allData != null) {
-                    List<TaskModel> allDataList = (jsonDecode(allData) as List)
-                        .map((element) => TaskModel.fromJson(element))
-                        .toList();
-                    final int newIndex = allDataList.indexWhere(
-                      (e) => e.id == tasks[index!].id,
-                    );
-                    allDataList[newIndex] = tasks[index!];
-                    pref.setString("task", jsonEncode(allDataList));
-                    _loadTask();
-                  }
-                },
-              ),
+    return SafeArea(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(18.0),
+            child: Text(
+              'To Do Tasks',
+              style: TextStyle(fontSize: 20, color: Color(0xFFFFFCFC)),
+            ),
+          ),
+
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: isLoading
+                  ? Center(
+                      child: CircularProgressIndicator(color: Colors.white),
+                    )
+                  : TaskListWidgets(
+                      tasks: tasks,
+                      onTap: (value, index) async {
+                        setState(() {
+                          tasks[index!].isDone = value ?? false;
+                        });
+                        final pref = await SharedPreferences.getInstance();
+
+                        final allData = pref.getString('task');
+                        if (allData != null) {
+                          List<TaskModel> allDataList =
+                              (jsonDecode(allData) as List)
+                                  .map((element) => TaskModel.fromJson(element))
+                                  .toList();
+                          final int newIndex = allDataList.indexWhere(
+                            (e) => e.id == tasks[index!].id,
+                          );
+                          allDataList[newIndex] = tasks[index!];
+                          pref.setString("task", jsonEncode(allDataList));
+                          _loadTask();
+                        }
+                      },
+                    ),
+            ),
+          ),
+        ],
       ),
     );
   }
