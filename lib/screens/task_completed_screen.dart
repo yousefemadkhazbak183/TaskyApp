@@ -71,7 +71,8 @@ class _TaskCompletedScreenState extends State<TaskCompletedScreen> {
                       onTap: (value, index) async {
                         setState(() {
                           tasks[index!].isDone = value ?? false;
-                        });
+                        }
+                        );
                         final pref = await SharedPreferences.getInstance();
                         // final updatedTask = tasks
                         //     .map((element) => element.toJson())
