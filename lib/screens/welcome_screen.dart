@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mastering_course/screens/text_form_field.dart';
+import 'package:flutter_mastering_course/widgets/text_form_field.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class WelcomeScreen extends StatelessWidget {

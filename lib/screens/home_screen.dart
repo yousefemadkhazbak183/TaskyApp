@@ -3,6 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_mastering_course/core/widgets/task_list_widgets.dart';
 import 'package:flutter_mastering_course/model/task_model.dart';
+import 'package:flutter_mastering_course/widgets/achived_task_widget.dart';
+import 'package:flutter_mastering_course/widgets/high_priority_tasks.dart';
+
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -19,6 +22,11 @@ class _HomeScreenState extends State<HomeScreen> {
   String? username;
   List<TaskModel> tasks = [];
   bool isLoading = false;
+  int totalTasks = 0;
+
+  int totalDoneTasks = 0;
+
+  double percent = 0;
 
   @override
   void initState() {
@@ -47,11 +55,18 @@ class _HomeScreenState extends State<HomeScreen> {
 
       setState(() {
         tasks = taskAfterDecode.map((e) => TaskModel.fromJson(e)).toList();
+        _calculatePercent();
       });
     }
     setState(() {
       isLoading = false;
     });
+  }
+
+  _calculatePercent() {
+    totalTasks = tasks.length;
+    totalDoneTasks = tasks.where((element) => element.isDone).length;
+    percent = totalDoneTasks == 0 ? 0 : totalDoneTasks / totalTasks;
   }
 
   @override
@@ -95,6 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
               SizedBox(height: 16),
+
               Text(
                 'Yuhuu ,Your work Is ,',
                 style: TextStyle(color: Color(0xFFFFFCFC), fontSize: 32),
@@ -108,6 +124,30 @@ class _HomeScreenState extends State<HomeScreen> {
                   SvgPicture.asset('assets/images/wave_hand.svg'),
                 ],
               ),
+
+              SizedBox(height: 16),
+              ArchivedTaskWidget(
+                totalTasks: totalTasks,
+                totalDoneTasks: totalDoneTasks,
+                percent: percent,
+              ),
+              SizedBox(height: 8),
+              HighPriorityTasks(
+                tasks: tasks,
+                onTap: (bool? value, int? index) async {
+                  setState(() {
+                    tasks[index!].isDone = value ?? false;
+                  });
+                  final pref = await SharedPreferences.getInstance();
+                  final updatedTask = tasks
+                      .map((element) => element.toJson())
+                      .toList();
+                  final taskEncode = jsonEncode(updatedTask);
+                  pref.setString("task", taskEncode);
+                  _calculatePercent();
+                },
+                
+              ),
               Padding(
                 padding: const EdgeInsets.only(top: 24, bottom: 16),
                 child: Text(
@@ -118,10 +158,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Expanded(
                 child: isLoading
                     ? Center(
-                        child: CircularProgressIndicator(
-                          color: Colors.white,
-                          value: 20,
-                        ),
+                        child: CircularProgressIndicator(color: Colors.white),
                       )
                     : TaskListWidgets(
                         tasks: tasks,
@@ -135,6 +172,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               .toList();
                           final taskEncode = jsonEncode(updatedTask);
                           pref.setString("task", taskEncode);
+                          _calculatePercent();
                         },
                       ),
               ),
