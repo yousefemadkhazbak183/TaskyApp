@@ -45,10 +45,7 @@ class TextFormFieldWidget extends StatelessWidget {
             onPressed: () async {
               if (_key.currentState?.validate() ?? false) {
                 final pref = await SharedPreferences.getInstance();
-                await pref.setString(
-                  'username',
-                  controller.value.text,
-                );
+                await pref.setString('username', controller.value.text);
                 String? username = pref.getString('username');
                 print(username);
                 Navigator.pushReplacement(

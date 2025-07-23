@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_mastering_course/core/widgets/custom_text_form_field.dart';
 import 'package:flutter_mastering_course/model/task_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -41,29 +42,12 @@ class _AddTaskState extends State<AddTask> {
                 Expanded(
                   child: SingleChildScrollView(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Task Name',
-                          style: TextStyle(
-                            color: Color(0xFFFFFCFC),
-                            fontSize: 16,
-                          ),
-                        ),
                         SizedBox(height: 8),
-                        TextFormField(
+                        CustomTextFormField(
+                          title: 'Task Name',
                           controller: addTaskController,
-                          style: TextStyle(color: Colors.white),
-                          decoration: InputDecoration(
-                            hintText: 'Finish UI design for login screen',
-                            hintStyle: TextStyle(color: Color(0xFF6D6D6D)),
-                            filled: true,
-                            fillColor: Color(0xFF282828),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(16),
-                              borderSide: BorderSide.none,
-                            ),
-                          ),
+                          hintText: 'Finish UI design for login screen',
                           validator: (String? value) {
                             if (value == null || value.trim().isEmpty) {
                               return 'Please enter task name';
@@ -72,22 +56,12 @@ class _AddTaskState extends State<AddTask> {
                           },
                         ),
                         SizedBox(height: 20),
-                        SizedBox(height: 8),
-                        TextFormField(
+                        CustomTextFormField(
+                          title: 'Task Description',
                           controller: addTaskDescriptionController,
-                          style: TextStyle(color: Colors.white),
+                          hintText:
+                              'Finish onboarding UI and hand off to \n devs by Thursday.',
                           maxLines: 5,
-                          decoration: InputDecoration(
-                            hintText:
-                                'Finish onboarding UI and hand off to \n devs by Thursday.',
-                            hintStyle: TextStyle(color: Color(0xFF6D6D6D)),
-                            filled: true,
-                            fillColor: Color(0xFF282828),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(16),
-                              borderSide: BorderSide.none,
-                            ),
-                          ),
                         ),
                         SizedBox(height: 20),
                         Row(
@@ -117,8 +91,6 @@ class _AddTaskState extends State<AddTask> {
                 ),
                 ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF15B86C),
-                    foregroundColor: Color(0xFFFFFCFC),
                     fixedSize: Size(MediaQuery.of(context).size.width, 40),
                   ),
                   onPressed: () async {
