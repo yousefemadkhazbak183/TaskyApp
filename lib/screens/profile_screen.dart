@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mastering_course/screens/user_details_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -10,7 +11,8 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  late final String username;
+  late String username;
+  String? motivationQuote;
   bool isLoading = true;
   @override
   void initState() {
@@ -23,6 +25,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     setState(() {
       username = pref.getString('username') ?? '';
+      motivationQuote = pref.getString('motivation_quote');
       isLoading = false;
     });
   }
@@ -87,7 +90,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
 
                         Text(
-                          'One task at a time. One step closer.',
+                          motivationQuote ??
+                              'One task at a time. One step closer.',
                           style: TextStyle(
                             fontSize: 14,
                             color: Color(0xFFC6C6C6),
@@ -104,7 +108,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   SizedBox(height: 16),
                   ListTile(
-                    onTap: () {},
+                    onTap: () async {
+                      final result = await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return UserDetailsScreen(
+                              userName: username,
+                              motivationQuote: motivationQuote,
+                            );
+                          },
+                        ),
+                      );
+                      if (result != null && result) {
+                        _loadUsername();
+                      }
+                    },
                     contentPadding: EdgeInsets.zero,
                     title: Text(
                       'User Details',
