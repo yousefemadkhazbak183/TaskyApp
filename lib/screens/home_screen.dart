@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_mastering_course/core/services/preferences_manager.dart'
+    show PreferencesManager;
 
 import 'package:flutter_mastering_course/model/task_model.dart';
 import 'package:flutter_mastering_course/widgets/achived_task_widget.dart';
@@ -8,7 +10,6 @@ import 'package:flutter_mastering_course/widgets/high_priority_tasks.dart';
 import 'package:flutter_mastering_course/widgets/sliver_task_list_widget.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'add_task.dart';
 
@@ -38,10 +39,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _loadUsername() async {
-    final pref = await SharedPreferences.getInstance();
-
     setState(() {
-      username = pref.getString('username');
+      username = PreferencesManager().getString('username');
     });
   }
 
@@ -49,8 +48,8 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       isLoading = true;
     });
-    final pref = await SharedPreferences.getInstance();
-    final finalTasks = pref.getString('task');
+
+    final finalTasks = PreferencesManager().getString('task');
     if (finalTasks != null) {
       final taskAfterDecode = jsonDecode(finalTasks) as List<dynamic>;
 
@@ -74,10 +73,10 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       tasks[index!].isDone = value ?? false;
     });
-    final pref = await SharedPreferences.getInstance();
+
     final updatedTask = tasks.map((element) => element.toJson()).toList();
     final taskEncode = jsonEncode(updatedTask);
-    pref.setString("task", taskEncode);
+    await PreferencesManager().setString("task", taskEncode);
     _calculatePercent();
   }
 

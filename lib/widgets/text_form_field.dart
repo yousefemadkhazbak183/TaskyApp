@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mastering_course/core/services/preferences_manager.dart';
 import 'package:flutter_mastering_course/screens/main_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class TextFormFieldWidget extends StatelessWidget {
   TextFormFieldWidget({super.key});
@@ -44,9 +44,11 @@ class TextFormFieldWidget extends StatelessWidget {
             ),
             onPressed: () async {
               if (_key.currentState?.validate() ?? false) {
-                final pref = await SharedPreferences.getInstance();
-                await pref.setString('username', controller.value.text);
-                String? username = pref.getString('username');
+                await PreferencesManager().setString(
+                  'username',
+                  controller.value.text,
+                );
+                String? username = PreferencesManager().getString('username');
                 print(username);
                 Navigator.pushReplacement(
                   context,
@@ -57,7 +59,9 @@ class TextFormFieldWidget extends StatelessWidget {
                   ),
                 );
               } else {
-                /// ToDo: SnackBar.
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Please enter your name')),
+                );
               }
             },
             child: Text('Lets Get Started'),

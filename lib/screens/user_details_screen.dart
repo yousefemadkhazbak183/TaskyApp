@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mastering_course/core/services/preferences_manager.dart';
 import 'package:flutter_mastering_course/core/widgets/custom_text_form_field.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class UserDetailsScreen extends StatefulWidget {
   UserDetailsScreen({
@@ -78,12 +78,11 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                   ),
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      final pref = await SharedPreferences.getInstance();
-                      await pref.setString(
+                      await PreferencesManager().setString(
                         'username',
                         userNameController.value.text,
                       );
-                      await pref.setString(
+                      await PreferencesManager().setString(
                         'motivation_quote',
                         motivationQuoteController.value.text,
                       );
