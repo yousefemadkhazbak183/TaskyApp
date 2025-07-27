@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_mastering_course/core/services/preferences_manager.dart';
 import 'package:flutter_mastering_course/core/widgets/custom_text_form_field.dart';
 import 'package:flutter_mastering_course/model/task_model.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AddTask extends StatefulWidget {
   const AddTask({super.key});
@@ -95,8 +95,7 @@ class _AddTaskState extends State<AddTask> {
                   ),
                   onPressed: () async {
                     if (_key.currentState?.validate() ?? false) {
-                      final pref = await SharedPreferences.getInstance();
-                      final taskJson = pref.getString('task');
+                      final taskJson = PreferencesManager().getString('task');
 
                       List<dynamic> listTask = [];
                       if (taskJson != null) {
@@ -112,7 +111,7 @@ class _AddTaskState extends State<AddTask> {
                       listTask.add(model.toJson());
 
                       final taskEncode = jsonEncode(listTask);
-                      await pref.setString("task", taskEncode);
+                      await PreferencesManager().setString("task", taskEncode);
                       Navigator.of(context).pop(true);
                     }
                   },

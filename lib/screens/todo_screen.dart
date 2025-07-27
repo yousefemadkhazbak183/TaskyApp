@@ -1,9 +1,9 @@
 import 'dart:convert';
+import 'package:flutter_mastering_course/core/services/preferences_manager.dart';
 import 'package:flutter_mastering_course/core/widgets/task_list_widgets.dart';
 import 'package:flutter_mastering_course/model/task_model.dart';
 
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class TodoScreen extends StatefulWidget {
   const TodoScreen({super.key});
@@ -28,8 +28,7 @@ class _TodoScreenState extends State<TodoScreen> {
       isLoading = true;
     });
 
-    final pref = await SharedPreferences.getInstance();
-    final finalTasks = pref.getString('task');
+    final finalTasks = PreferencesManager().getString('task');
     if (finalTasks != null) {
       final taskAfterDecode = jsonDecode(finalTasks) as List<dynamic>;
 
@@ -70,9 +69,8 @@ class _TodoScreenState extends State<TodoScreen> {
                         setState(() {
                           tasks[index!].isDone = value ?? false;
                         });
-                        final pref = await SharedPreferences.getInstance();
 
-                        final allData = pref.getString('task');
+                        final allData = PreferencesManager().getString('task');
                         if (allData != null) {
                           List<TaskModel> allDataList =
                               (jsonDecode(allData) as List)
@@ -82,7 +80,10 @@ class _TodoScreenState extends State<TodoScreen> {
                             (e) => e.id == tasks[index!].id,
                           );
                           allDataList[newIndex] = tasks[index!];
-                          pref.setString("task", jsonEncode(allDataList));
+                          await PreferencesManager().setString(
+                            "task",
+                            jsonEncode(allDataList),
+                          );
                           _loadTask();
                         }
                       },

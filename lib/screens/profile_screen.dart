@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mastering_course/core/services/preferences_manager.dart';
 import 'package:flutter_mastering_course/screens/user_details_screen.dart';
+import 'package:flutter_mastering_course/screens/welcome_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -21,11 +22,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   void _loadUsername() async {
-    final pref = await SharedPreferences.getInstance();
-
     setState(() {
-      username = pref.getString('username') ?? '';
-      motivationQuote = pref.getString('motivation_quote');
+      username = PreferencesManager().getString('username') ?? '';
+      motivationQuote = PreferencesManager().getString('motivation_quote');
       isLoading = false;
     });
   }
@@ -160,7 +159,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Divider(color: Color(0xFF6E6E6E)),
                   SizedBox(height: 20),
                   ListTile(
-                    onTap: () {},
+                    onTap: () async {
+                      PreferencesManager().remove('username');
+                      PreferencesManager().remove('motivation_quote');
+                      PreferencesManager().remove('task');
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (BuildContext context) {
+                            return WelcomeScreen();
+                          },
+                        ),
+                        (Route<dynamic> route) => false,
+                      );
+                    },
                     contentPadding: EdgeInsets.zero,
                     title: Text(
                       'Log Out',

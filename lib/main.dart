@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mastering_course/core/services/preferences_manager.dart';
 import 'package:flutter_mastering_course/screens/main_screen.dart';
 import 'package:flutter_mastering_course/screens/welcome_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final pref = await SharedPreferences.getInstance();
-  String? username = pref.getString('username');
+  await PreferencesManager().init();
+
+  String? username = PreferencesManager().getString('username');
+
   runApp(MyApp(username: username));
 }
 
