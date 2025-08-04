@@ -50,11 +50,7 @@ class _HighPriorityScreenState extends State<HighPriorityScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('High Priority Tasks'),
-        centerTitle: false,
-        iconTheme: IconThemeData(color: Colors.white),
-      ),
+      appBar: AppBar(title: Text('High Priority Tasks'), centerTitle: false),
 
       body: Padding(
         padding: const EdgeInsets.all(16),

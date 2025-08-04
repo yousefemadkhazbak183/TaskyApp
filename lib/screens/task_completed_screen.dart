@@ -55,7 +55,7 @@ class _TaskCompletedScreenState extends State<TaskCompletedScreen> {
             padding: const EdgeInsets.all(18.0),
             child: Text(
               'Completed Tasks',
-              style: TextStyle(fontSize: 20, color: Color(0xFFFFFCFC)),
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
           ),
           Expanded(

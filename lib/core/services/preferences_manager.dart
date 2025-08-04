@@ -29,4 +29,12 @@ class PreferencesManager {
   remove(String key) {
     return _preferences.remove(key);
   }
+
+  Future<bool> setBool(String key, bool value) {
+    return _preferences.setBool(key, value);
+  }
+
+  bool? getBool(String key) {
+    return _preferences.getBool(key);
+  }
 }

@@ -52,7 +52,7 @@ class _TodoScreenState extends State<TodoScreen> {
             padding: const EdgeInsets.all(18.0),
             child: Text(
               'To Do Tasks',
-              style: TextStyle(fontSize: 20, color: Color(0xFFFFFCFC)),
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
           ),
 

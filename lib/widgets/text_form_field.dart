@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mastering_course/core/services/preferences_manager.dart';
+import 'package:flutter_mastering_course/core/widgets/custom_text_form_field.dart';
 import 'package:flutter_mastering_course/screens/main_screen.dart';
 
 class TextFormFieldWidget extends StatelessWidget {
@@ -16,30 +17,19 @@ class TextFormFieldWidget extends StatelessWidget {
         children: [
           TextFormField(
             controller: controller,
-            style: TextStyle(color: Colors.white),
-            decoration: InputDecoration(
-              hintText: 'e.g Youssef Emad',
-              hintStyle: TextStyle(color: Color(0xFF6D6D6D)),
-              filled: true,
-              fillColor: Color(0xFF282828),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(16),
-                borderSide: BorderSide.none,
-              ),
-            ),
+            decoration: InputDecoration(hintText: 'e.g Youssef Emad'),
+            style: Theme.of(context).textTheme.labelSmall,
+            // cursorColor: Colors.red,
             validator: (String? value) {
               if (value == null || value.trim().isEmpty) {
                 return 'Please enter your name';
               }
               return null;
             },
-            cursorColor: Colors.white,
           ),
           SizedBox(height: 24),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: Color(0xFF15B86C),
-              foregroundColor: Color(0xFFFFFCFC),
               fixedSize: Size(MediaQuery.of(context).size.width, 40),
             ),
             onPressed: () async {

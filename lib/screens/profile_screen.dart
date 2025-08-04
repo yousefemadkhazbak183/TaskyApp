@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mastering_course/core/services/preferences_manager.dart';
+import 'package:flutter_mastering_course/core/theme/theme_controller.dart';
+import 'package:flutter_mastering_course/core/widgets/custom_svg_picture.dart';
 import 'package:flutter_mastering_course/screens/user_details_screen.dart';
 import 'package:flutter_mastering_course/screens/welcome_screen.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -15,6 +16,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   late String username;
   String? motivationQuote;
   bool isLoading = true;
+
   @override
   void initState() {
     super.initState();
@@ -28,8 +30,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
       isLoading = false;
     });
   }
-
-  bool isHighPriority = false;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +45,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     padding: const EdgeInsets.only(top: 8.0),
                     child: Text(
                       'My Profile',
-                      style: TextStyle(fontSize: 20, color: Color(0xFFFFFCFC)),
+                      style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
                   SizedBox(height: 16),
@@ -62,6 +62,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               radius: 60,
                               backgroundColor: Colors.transparent,
                             ),
+
+                            // Camera for change image
                             GestureDetector(
                               onTap: () {},
                               child: Container(
@@ -69,12 +71,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 height: 45,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(100),
-                                  color: Color(0xFF282828),
+                                  color: ThemeController.isDark()
+                                      ? Color(0xFF282828)
+                                      : Color(0xFFFFFFFF),
                                 ),
-                                child: Icon(
-                                  Icons.camera_alt,
-                                  color: Color(0xFFFFFCFC),
-                                ),
+                                child: Icon(Icons.camera_alt),
                               ),
                             ),
                           ],
@@ -82,19 +83,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         SizedBox(height: 6),
                         Text(
                           username,
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Color(0xFFFFFCFC),
-                          ),
+                          style: Theme.of(context).textTheme.bodyMedium,
                         ),
 
                         Text(
                           motivationQuote ??
                               'One task at a time. One step closer.',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Color(0xFFC6C6C6),
-                          ),
+                          style: Theme.of(context).textTheme.titleSmall,
                         ),
                       ],
                     ),
@@ -103,7 +98,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Text(
                     'Profile Info',
 
-                    style: TextStyle(fontSize: 20, color: Color(0xFFFFFCFC)),
+                    style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   SizedBox(height: 16),
                   ListTile(
@@ -126,37 +121,47 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     contentPadding: EdgeInsets.zero,
                     title: Text(
                       'User Details',
-                      style: TextStyle(fontSize: 16, color: Color(0xFFFFFCFC)),
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
-                    leading: SvgPicture.asset(
-                      'assets/images/leading_element.svg',
+                    leading: CustomSvgPicture(
+                      path: "assets/images/leading_element.svg",
+                      isColorFilter: true,
                     ),
-                    trailing: SvgPicture.asset(
-                      'assets/images/arrow_element.svg',
+
+                    trailing: CustomSvgPicture(
+                      path: "assets/images/arrow_element.svg",
+                      isColorFilter: true,
                     ),
                   ),
 
                   SizedBox(height: 18),
-                  Divider(color: Color(0xFF6E6E6E), thickness: 1),
+                  Divider(thickness: 1),
                   SizedBox(height: 13),
                   ListTile(
                     contentPadding: EdgeInsets.zero,
                     title: Text(
                       'Dark Mode',
-                      style: TextStyle(fontSize: 16, color: Color(0xFFFFFCFC)),
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
-                    leading: SvgPicture.asset('assets/images/dark.svg'),
-                    trailing: Switch(
-                      value: isHighPriority,
-                      onChanged: (value) {
-                        setState(() {
-                          isHighPriority = value;
-                        });
+                    leading: CustomSvgPicture(
+                      path: "assets/images/dark.svg",
+                      isColorFilter: true,
+                    ),
+
+                    trailing: ValueListenableBuilder(
+                      valueListenable: ThemeController.themeNotifier,
+                      builder: (BuildContext context, value, Widget? child) {
+                        return Switch(
+                          value: value == ThemeMode.dark,
+                          onChanged: (value) {
+                            ThemeController.toggleTheme();
+                          },
+                        );
                       },
                     ),
                   ),
                   SizedBox(height: 8),
-                  Divider(color: Color(0xFF6E6E6E)),
+                  Divider(thickness: 1),
                   SizedBox(height: 20),
                   ListTile(
                     onTap: () async {
@@ -176,11 +181,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     contentPadding: EdgeInsets.zero,
                     title: Text(
                       'Log Out',
-                      style: TextStyle(fontSize: 16, color: Color(0xFFFFFCFC)),
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
-                    leading: SvgPicture.asset('assets/images/logout.svg'),
-                    trailing: SvgPicture.asset(
-                      'assets/images/arrow_element.svg',
+                    leading: CustomSvgPicture(
+                      path: 'assets/images/logout.svg',
+                      isColorFilter: true,
+                    ),
+
+                    trailing: CustomSvgPicture(
+                      path: "assets/images/arrow_element.svg",
+                      isColorFilter: true,
                     ),
                   ),
                 ],

@@ -5,14 +5,14 @@ import 'package:flutter_mastering_course/core/services/preferences_manager.dart'
 import 'package:flutter_mastering_course/core/widgets/custom_text_form_field.dart';
 import 'package:flutter_mastering_course/model/task_model.dart';
 
-class AddTask extends StatefulWidget {
-  const AddTask({super.key});
+class AddTaskScreen extends StatefulWidget {
+  const AddTaskScreen({super.key});
 
   @override
-  State<AddTask> createState() => _AddTaskState();
+  State<AddTaskScreen> createState() => _AddTaskState();
 }
 
-class _AddTaskState extends State<AddTask> {
+class _AddTaskState extends State<AddTaskScreen> {
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
 
   /// ToDO: Dispose this controllers
@@ -28,8 +28,8 @@ class _AddTaskState extends State<AddTask> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
-        title: Text('New Task'),
-        iconTheme: IconThemeData(color: Color(0xFFFFFCFC)),
+        title: Text('New Task', style: Theme.of(context).textTheme.bodyMedium),
+        iconTheme: Theme.of(context).iconTheme,
       ),
       body: SafeArea(
         child: Padding(
@@ -69,10 +69,7 @@ class _AddTaskState extends State<AddTask> {
                           children: [
                             Text(
                               'High Priority',
-                              style: TextStyle(
-                                color: Color(0xFFFFFCFC),
-                                fontSize: 16,
-                              ),
+                              style: Theme.of(context).textTheme.titleMedium,
                             ),
                             Switch(
                               value: isHighPriority,

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mastering_course/core/theme/theme_controller.dart';
 import 'package:flutter_mastering_course/screens/home_screen.dart';
-import 'package:flutter_mastering_course/screens/profile_screen.dart' show ProfileScreen;
+import 'package:flutter_mastering_course/screens/profile_screen.dart'
+    show ProfileScreen;
 import 'package:flutter_mastering_course/screens/task_completed_screen.dart';
 import 'package:flutter_mastering_course/screens/todo_screen.dart';
 import 'package:flutter_svg/svg.dart';
@@ -28,10 +30,10 @@ class _MainScreenState extends State<MainScreen> {
       bottomNavigationBar: BottomNavigationBar(
         elevation: 0,
         currentIndex: _currentScreen,
-        backgroundColor: Color(0xFF181818),
-        unselectedItemColor: Color(0xFFC6C6C6),
-        selectedItemColor: Color(0xFF15B86C),
-        type: BottomNavigationBarType.fixed,
+        // backgroundColor: Color(0xFF181818),
+        // unselectedItemColor: Color(0xFFC6C6C6),
+        // selectedItemColor: Color(0xFF15B86C),
+        // type: BottomNavigationBarType.fixed,
         onTap: (int? index) {
           setState(() {
             _currentScreen = index ?? 0;

@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_mastering_course/core/theme/theme_controller.dart';
 
 class ArchivedTaskWidget extends StatelessWidget {
   ArchivedTaskWidget({
@@ -22,8 +23,13 @@ class ArchivedTaskWidget extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Color(0xFF282828),
+        color: Theme.of(context).colorScheme.primaryContainer,
         borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: ThemeController.isDark()
+              ? Colors.transparent
+              : Color(0xFFD1DAD6),
+        ),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -33,20 +39,12 @@ class ArchivedTaskWidget extends StatelessWidget {
             children: [
               Text(
                 'Achieved Tasks',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Color(0xFFFFFCFC),
-                  fontWeight: FontWeight.w400,
-                ),
+                style: Theme.of(context).textTheme.titleMedium,
               ),
               SizedBox(height: 4),
               Text(
                 "$totalDoneTasks Out of $totalTasks",
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Color(0xFFC6C6C6),
-                  fontWeight: FontWeight.w500,
-                ),
+                style: Theme.of(context).textTheme.titleSmall,
               ),
             ],
           ),
@@ -60,7 +58,7 @@ class ArchivedTaskWidget extends StatelessWidget {
                   width: 48,
                   child: CircularProgressIndicator(
                     value: percent,
-                    backgroundColor: Color(0xFF6D6D6D),
+                    backgroundColor: Theme.of(context).colorScheme.surface,
                     valueColor: AlwaysStoppedAnimation<Color>(
                       Color(0xFF15B86C),
                     ),
@@ -69,12 +67,8 @@ class ArchivedTaskWidget extends StatelessWidget {
                 ),
               ),
               Text(
-                "${percent * 100}%",
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Color(0xFFFFFCFC),
-                  fontWeight: FontWeight.w500,
-                ),
+                "${((percent * 100).toInt())}%",
+                style: Theme.of(context).textTheme.titleMedium,
               ),
             ],
           ),

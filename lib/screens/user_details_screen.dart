@@ -36,8 +36,10 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('User Details'),
-        iconTheme: IconThemeData(color: Color(0xFFFFFCFC)),
+        title: Text(
+          'User Details',
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
