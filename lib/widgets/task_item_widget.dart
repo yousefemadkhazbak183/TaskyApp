@@ -91,7 +91,7 @@ class TaskItemWidget extends StatelessWidget {
                     context: context,
                     builder: (context) {
                       return AlertDialog(
-                        title: Text('Delete Task'),
+                        title: const Text('Delete Task'),
                         titleTextStyle: Theme.of(
                           context,
                         ).textTheme.displayLarge,
@@ -101,7 +101,7 @@ class TaskItemWidget extends StatelessWidget {
                         contentTextStyle: Theme.of(
                           context,
                         ).textTheme.titleSmall,
-                        content: Text(
+                        content: const Text(
                           'Are you sure you want to delete this task?',
                         ),
                         actions: [
@@ -109,7 +109,7 @@ class TaskItemWidget extends StatelessWidget {
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            child: Text('Cancel'),
+                            child: const Text('Cancel'),
                           ),
                           TextButton(
                             onPressed: () {
@@ -119,7 +119,7 @@ class TaskItemWidget extends StatelessWidget {
                             style: TextButton.styleFrom(
                               foregroundColor: Colors.red,
                             ),
-                            child: Text('Delete'),
+                            child: const Text('Delete'),
                           ),
                         ],
                       );
