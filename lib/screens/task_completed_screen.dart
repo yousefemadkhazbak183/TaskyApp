@@ -14,7 +14,7 @@ class TaskCompletedScreen extends StatefulWidget {
 }
 
 class _TaskCompletedScreenState extends State<TaskCompletedScreen> {
-  List<TaskModel> tasks = [];
+  List<TaskModel> completeTasks = [];
   bool isLoading = false;
 
   @override
@@ -34,7 +34,7 @@ class _TaskCompletedScreenState extends State<TaskCompletedScreen> {
       final taskAfterDecode = jsonDecode(finalTasks) as List<dynamic>;
 
       setState(() {
-        tasks = taskAfterDecode
+        completeTasks = taskAfterDecode
             .map((e) => TaskModel.fromJson(e))
             .where((element) => element.isDone)
             .toList();
@@ -43,6 +43,25 @@ class _TaskCompletedScreenState extends State<TaskCompletedScreen> {
     setState(() {
       isLoading = false;
     });
+  }
+
+  _deleteTask(int? id) async {
+    List<TaskModel> deleteTask = [];
+    if (id == null) return;
+    final finalTasks = PreferencesManager().getString('task');
+    if (finalTasks != null) {
+      final taskAfterDecode = jsonDecode(finalTasks) as List<dynamic>;
+      deleteTask = taskAfterDecode.map((e) => TaskModel.fromJson(e)).toList();
+      deleteTask.removeWhere((e) => e.id == id);
+
+      setState(() {
+        completeTasks.removeWhere((task) => task.id == id);
+      });
+      final updatedTask = deleteTask
+          .map((element) => element.toJson())
+          .toList();
+      await PreferencesManager().setString("task", jsonEncode(updatedTask));
+    }
   }
 
   @override
@@ -62,32 +81,35 @@ class _TaskCompletedScreenState extends State<TaskCompletedScreen> {
             child: Padding(
               padding: const EdgeInsets.all(16),
               child: isLoading
-                  ? Center(
+                  ? const Center(
                       child: CircularProgressIndicator(color: Colors.white),
                     )
                   : TaskListWidgets(
-                      tasks: tasks,
+                      tasks: completeTasks,
                       onTap: (value, index) async {
                         setState(() {
-                          tasks[index!].isDone = value ?? false;
+                          completeTasks[index!].isDone = value ?? false;
                         });
 
                         final allData = PreferencesManager().getString('task');
                         if (allData != null) {
-                          List<TaskModel> allDataList =
+                          final List<TaskModel> allDataList =
                               (jsonDecode(allData) as List)
                                   .map((element) => TaskModel.fromJson(element))
                                   .toList();
                           final int newIndex = allDataList.indexWhere(
-                            (e) => e.id == tasks[index!].id,
+                            (e) => e.id == completeTasks[index!].id,
                           );
-                          allDataList[newIndex] = tasks[index!];
+                          allDataList[newIndex] = completeTasks[index!];
                           await PreferencesManager().setString(
                             "task",
                             jsonEncode(allDataList),
                           );
                           _loadTask();
                         }
+                      },
+                      onDelete: (int id) {
+                        _deleteTask(id);
                       },
                     ),
             ),

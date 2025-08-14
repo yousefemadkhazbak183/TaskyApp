@@ -34,7 +34,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return isLoading
-        ? Center(child: CircularProgressIndicator())
+        ? const Center(child: CircularProgressIndicator())
         : SafeArea(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
@@ -48,14 +48,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   Center(
                     child: Column(
                       children: [
                         Stack(
                           alignment: Alignment.bottomRight,
                           children: [
-                            CircleAvatar(
+                            const CircleAvatar(
                               backgroundImage: AssetImage(
                                 'assets/images/profile.png',
                               ),
@@ -72,15 +72,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(100),
                                   color: ThemeController.isDark()
-                                      ? Color(0xFF282828)
-                                      : Color(0xFFFFFFFF),
+                                      ? const Color(0xFF282828)
+                                      : const Color(0xFFFFFFFF),
                                 ),
-                                child: Icon(Icons.camera_alt),
+                                child: const Icon(Icons.camera_alt),
                               ),
                             ),
                           ],
                         ),
-                        SizedBox(height: 6),
+                        const SizedBox(height: 6),
                         Text(
                           username,
                           style: Theme.of(context).textTheme.bodyMedium,
@@ -94,13 +94,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 24),
+                  const SizedBox(height: 24),
                   Text(
                     'Profile Info',
 
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   ListTile(
                     onTap: () async {
                       final result = await Navigator.push(
@@ -134,9 +134,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
 
-                  SizedBox(height: 18),
-                  Divider(thickness: 1),
-                  SizedBox(height: 13),
+                  const SizedBox(height: 18),
+                  const Divider(thickness: 1),
+                  const SizedBox(height: 13),
                   ListTile(
                     contentPadding: EdgeInsets.zero,
                     title: Text(
@@ -160,9 +160,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       },
                     ),
                   ),
-                  SizedBox(height: 8),
-                  Divider(thickness: 1),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 8),
+                  const Divider(thickness: 1),
+                  const SizedBox(height: 20),
                   ListTile(
                     onTap: () async {
                       PreferencesManager().remove('username');

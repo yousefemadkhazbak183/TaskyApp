@@ -11,7 +11,7 @@ void main() async {
 
   await PreferencesManager().init();
   ThemeController().init();
-  String? username = PreferencesManager().getString('username');
+  final String? username = PreferencesManager().getString('username');
 
   runApp(MyApp(username: username));
 }
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
           theme: lightTheme,
           darkTheme: darkTheme,
           themeMode: value,
-          home: username == null ? WelcomeScreen() : MainScreen(),
+          home: username == null ? WelcomeScreen() : const MainScreen(),
         );
       },
     );

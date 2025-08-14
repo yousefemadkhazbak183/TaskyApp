@@ -42,6 +42,25 @@ class _TodoScreenState extends State<TodoScreen> {
     });
   }
 
+  _deleteTask(int? id) async {
+    List<TaskModel> deleteTask = [];
+    if (id == null) return;
+    final finalTasks = PreferencesManager().getString('task');
+    if (finalTasks != null) {
+      final taskAfterDecode = jsonDecode(finalTasks) as List<dynamic>;
+      deleteTask = taskAfterDecode.map((e) => TaskModel.fromJson(e)).toList();
+      deleteTask.removeWhere((e) => e.id == id);
+
+      setState(() {
+        tasks.removeWhere((task) => task.id == id);
+      });
+      final updatedTask = deleteTask
+          .map((element) => element.toJson())
+          .toList();
+      await PreferencesManager().setString("task", jsonEncode(updatedTask));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -60,7 +79,7 @@ class _TodoScreenState extends State<TodoScreen> {
             child: Padding(
               padding: const EdgeInsets.all(16),
               child: isLoading
-                  ? Center(
+                  ? const Center(
                       child: CircularProgressIndicator(color: Colors.white),
                     )
                   : TaskListWidgets(
@@ -72,7 +91,7 @@ class _TodoScreenState extends State<TodoScreen> {
 
                         final allData = PreferencesManager().getString('task');
                         if (allData != null) {
-                          List<TaskModel> allDataList =
+                          final List<TaskModel> allDataList =
                               (jsonDecode(allData) as List)
                                   .map((element) => TaskModel.fromJson(element))
                                   .toList();
@@ -86,6 +105,9 @@ class _TodoScreenState extends State<TodoScreen> {
                           );
                           _loadTask();
                         }
+                      },
+                      onDelete: (int id) {
+                        _deleteTask(id);
                       },
                     ),
             ),

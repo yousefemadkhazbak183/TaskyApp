@@ -47,15 +47,39 @@ class _HighPriorityScreenState extends State<HighPriorityScreen> {
     });
   }
 
+  _deleteTask(int? id) async {
+    List<TaskModel> deleteTask = [];
+    if (id == null) return;
+    final finalTasks = PreferencesManager().getString('task');
+    if (finalTasks != null) {
+      final taskAfterDecode = jsonDecode(finalTasks) as List<dynamic>;
+      deleteTask = taskAfterDecode.map((e) => TaskModel.fromJson(e)).toList();
+      deleteTask.removeWhere((e) => e.id == id);
+
+      setState(() {
+        highPriorityTasks.removeWhere((task) => task.id == id);
+      });
+      final updatedTask = deleteTask
+          .map((element) => element.toJson())
+          .toList();
+      await PreferencesManager().setString("task", jsonEncode(updatedTask));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('High Priority Tasks'), centerTitle: false),
+      appBar: AppBar(
+        title: const Text('High Priority Tasks'),
+        centerTitle: false,
+      ),
 
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: isLoading
-            ? Center(child: CircularProgressIndicator(color: Colors.white))
+            ? const Center(
+                child: CircularProgressIndicator(color: Colors.white),
+              )
             : TaskListWidgets(
                 tasks: highPriorityTasks,
                 onTap: (value, index) async {
@@ -65,9 +89,10 @@ class _HighPriorityScreenState extends State<HighPriorityScreen> {
 
                   final allData = PreferencesManager().getString('task');
                   if (allData != null) {
-                    List<TaskModel> allDataList = (jsonDecode(allData) as List)
-                        .map((element) => TaskModel.fromJson(element))
-                        .toList();
+                    final List<TaskModel> allDataList =
+                        (jsonDecode(allData) as List)
+                            .map((element) => TaskModel.fromJson(element))
+                            .toList();
                     final int newIndex = allDataList.indexWhere(
                       (e) => e.id == highPriorityTasks[index!].id,
                     );
@@ -78,6 +103,9 @@ class _HighPriorityScreenState extends State<HighPriorityScreen> {
                     );
                     _loadTask();
                   }
+                },
+                onDelete: (int id) {
+                  _deleteTask(id);
                 },
               ),
       ),

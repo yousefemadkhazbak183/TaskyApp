@@ -21,14 +21,14 @@ class ArchivedTaskWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.primaryContainer,
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
           color: ThemeController.isDark()
               ? Colors.transparent
-              : Color(0xFFD1DAD6),
+              : const Color(0xFFD1DAD6),
         ),
       ),
       child: Row(
@@ -41,7 +41,7 @@ class ArchivedTaskWidget extends StatelessWidget {
                 'Achieved Tasks',
                 style: Theme.of(context).textTheme.titleMedium,
               ),
-              SizedBox(height: 4),
+              const SizedBox(height: 4),
               Text(
                 "$totalDoneTasks Out of $totalTasks",
                 style: Theme.of(context).textTheme.titleSmall,
@@ -59,7 +59,7 @@ class ArchivedTaskWidget extends StatelessWidget {
                   child: CircularProgressIndicator(
                     value: percent,
                     backgroundColor: Theme.of(context).colorScheme.surface,
-                    valueColor: AlwaysStoppedAnimation<Color>(
+                    valueColor: const AlwaysStoppedAnimation<Color>(
                       Color(0xFF15B86C),
                     ),
                     strokeWidth: 5,

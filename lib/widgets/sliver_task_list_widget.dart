@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mastering_course/core/widgets/custom_check_box.dart';
 import 'package:flutter_mastering_course/model/task_model.dart';
 import 'package:flutter_mastering_course/widgets/task_item_widget.dart';
 
@@ -9,10 +8,12 @@ class SliverTaskListWidget extends StatelessWidget {
     required this.tasks,
     required this.onTap,
     this.emptyMessage,
+    required this.onDelete,
   });
 
   final List<TaskModel> tasks;
   final Function(bool?, int?) onTap;
+  final Function(int id) onDelete;
   final String? emptyMessage;
 
   @override
@@ -27,7 +28,7 @@ class SliverTaskListWidget extends StatelessWidget {
             ),
           )
         : SliverPadding(
-            padding: EdgeInsets.only(bottom: 80),
+            padding: const EdgeInsets.only(bottom: 80),
             sliver: SliverList.separated(
               itemBuilder: (BuildContext context, int index) {
                 return TaskItemWidget(
@@ -35,11 +36,14 @@ class SliverTaskListWidget extends StatelessWidget {
                   onChanged: (bool? value) {
                     onTap(value, index);
                   },
+                  onDelete: (int id) {
+                    onDelete(id);
+                  },
                 );
               },
               itemCount: tasks.length,
               separatorBuilder: (BuildContext context, int index) {
-                return SizedBox(height: 8);
+                return const SizedBox(height: 8);
               },
             ),
           );

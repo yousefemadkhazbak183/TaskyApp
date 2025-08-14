@@ -3,7 +3,7 @@ import 'package:flutter_mastering_course/core/services/preferences_manager.dart'
 import 'package:flutter_mastering_course/core/widgets/custom_text_form_field.dart';
 
 class UserDetailsScreen extends StatefulWidget {
-  UserDetailsScreen({
+  const UserDetailsScreen({
     super.key,
     required this.userName,
     required this.motivationQuote,
@@ -58,7 +58,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                   return null;
                 },
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               CustomTextFormField(
                 hintText: 'One task at a time. One step closer.',
                 controller: motivationQuoteController,
@@ -71,7 +71,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                   return null;
                 },
               ),
-              Spacer(),
+              const Spacer(),
               Padding(
                 padding: const EdgeInsets.only(bottom: 11),
                 child: ElevatedButton(
@@ -91,7 +91,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                       Navigator.pop(context, true);
                     }
                   },
-                  child: Text('Save Changes'),
+                  child: const Text('Save Changes'),
                 ),
               ),
             ],
