@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mastering_course/core/services/preferences_manager.dart';
-import 'package:flutter_mastering_course/core/widgets/custom_text_form_field.dart';
 import 'package:flutter_mastering_course/screens/main_screen.dart';
 
 class TextFormFieldWidget extends StatelessWidget {
@@ -17,7 +16,7 @@ class TextFormFieldWidget extends StatelessWidget {
         children: [
           TextFormField(
             controller: controller,
-            decoration: InputDecoration(hintText: 'e.g Youssef Emad'),
+            decoration: const InputDecoration(hintText: 'e.g Youssef Emad'),
             style: Theme.of(context).textTheme.labelSmall,
             // cursorColor: Colors.red,
             validator: (String? value) {
@@ -27,7 +26,7 @@ class TextFormFieldWidget extends StatelessWidget {
               return null;
             },
           ),
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
               fixedSize: Size(MediaQuery.of(context).size.width, 40),
@@ -38,23 +37,23 @@ class TextFormFieldWidget extends StatelessWidget {
                   'username',
                   controller.value.text,
                 );
-                String? username = PreferencesManager().getString('username');
+                final String? username = PreferencesManager().getString('username');
                 print(username);
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (BuildContext context) {
-                      return MainScreen();
+                      return const MainScreen();
                     },
                   ),
                 );
               } else {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Please enter your name')),
+                  const SnackBar(content: Text('Please enter your name')),
                 );
               }
             },
-            child: Text('Lets Get Started'),
+            child: const Text('Lets Get Started'),
           ),
         ],
       ),

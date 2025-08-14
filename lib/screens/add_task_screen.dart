@@ -43,7 +43,7 @@ class _AddTaskState extends State<AddTaskScreen> {
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
-                        SizedBox(height: 8),
+                        const SizedBox(height: 8),
                         CustomTextFormField(
                           title: 'Task Name',
                           controller: addTaskController,
@@ -55,7 +55,7 @@ class _AddTaskState extends State<AddTaskScreen> {
                             return null;
                           },
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         CustomTextFormField(
                           title: 'Task Description',
                           controller: addTaskDescriptionController,
@@ -63,7 +63,7 @@ class _AddTaskState extends State<AddTaskScreen> {
                               'Finish onboarding UI and hand off to \n devs by Thursday.',
                           maxLines: 5,
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -98,7 +98,7 @@ class _AddTaskState extends State<AddTaskScreen> {
                       if (taskJson != null) {
                         listTask = jsonDecode(taskJson);
                       }
-                      TaskModel model = TaskModel(
+                      final TaskModel model = TaskModel(
                         id: listTask.length + 1,
                         taskName: addTaskController.text,
                         taskDescription: addTaskDescriptionController.text,
@@ -112,8 +112,8 @@ class _AddTaskState extends State<AddTaskScreen> {
                       Navigator.of(context).pop(true);
                     }
                   },
-                  label: Text('Add Task'),
-                  icon: Icon(Icons.add),
+                  label: const Text('Add Task'),
+                  icon: const Icon(Icons.add),
                 ),
               ],
             ),

@@ -19,7 +19,7 @@ class HighPriorityTasks extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       width: double.infinity,
 
       decoration: BoxDecoration(
@@ -28,7 +28,7 @@ class HighPriorityTasks extends StatelessWidget {
         border: Border.all(
           color: ThemeController.isDark()
               ? Colors.transparent
-              : Color(0xFFD1DAD6),
+              : const Color(0xFFD1DAD6),
         ),
       ),
       child: Row(
@@ -43,7 +43,7 @@ class HighPriorityTasks extends StatelessWidget {
                   'High Priority Tasks',
                   style: Theme.of(context).textTheme.headlineSmall,
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 ...tasks.reversed.where((e) => e.isHighPriority).take(4).map((
                   element,
                 ) {
@@ -79,14 +79,14 @@ class HighPriorityTasks extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (BuildContext context) {
-                    return HighPriorityScreen();
+                    return const HighPriorityScreen();
                   },
                 ),
               );
               refresh();
             },
             child: Container(
-              padding: EdgeInsets.all(8),
+              padding: const EdgeInsets.all(8),
               height: 48,
               width: 48,
               decoration: BoxDecoration(
@@ -100,8 +100,8 @@ class HighPriorityTasks extends StatelessWidget {
                 'assets/images/arrow_up_right.svg',
                 colorFilter: ColorFilter.mode(
                   ThemeController.isDark()
-                      ? Color(0xFFC6C6C6)
-                      : Color(0xFF3A4640),
+                      ? const Color(0xFFC6C6C6)
+                      : const Color(0xFF3A4640),
                   BlendMode.srcIn,
                 ),
               ),

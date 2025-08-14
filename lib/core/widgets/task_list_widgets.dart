@@ -8,10 +8,12 @@ class TaskListWidgets extends StatelessWidget {
     required this.tasks,
     required this.onTap,
     this.emptyMessage,
+    required this.onDelete,
   });
 
   final List<TaskModel> tasks;
   final Function(bool?, int?) onTap;
+  final Function(int id) onDelete;
   final String? emptyMessage;
 
   @override
@@ -24,7 +26,7 @@ class TaskListWidgets extends StatelessWidget {
             ),
           )
         : ListView.separated(
-            padding: EdgeInsets.only(bottom: 40),
+            padding: const EdgeInsets.only(bottom: 40),
             itemBuilder: (BuildContext context, int index) {
               return Padding(
                 padding: const EdgeInsets.only(top: 8.0),
@@ -33,12 +35,15 @@ class TaskListWidgets extends StatelessWidget {
                   onChanged: (bool? value) {
                     onTap(value, index);
                   },
+                  onDelete: (int id) {
+                    onDelete(id);
+                  },
                 ),
               );
             },
             itemCount: tasks.length,
             separatorBuilder: (BuildContext context, int index) {
-              return SizedBox(height: 8);
+              return const SizedBox(height: 8);
             },
           );
   }

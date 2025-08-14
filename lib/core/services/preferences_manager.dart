@@ -14,7 +14,7 @@ class PreferencesManager {
 
   late final SharedPreferences _preferences;
 
-  init() async {
+  Future<void> init() async {
     _preferences = await SharedPreferences.getInstance();
   }
 
@@ -26,7 +26,7 @@ class PreferencesManager {
     return await _preferences.setString(key, value);
   }
 
-  remove(String key) {
+  Future<bool> remove(String key) {
     return _preferences.remove(key);
   }
 

@@ -10,8 +10,6 @@ import 'package:flutter_mastering_course/widgets/achived_task_widget.dart';
 import 'package:flutter_mastering_course/widgets/high_priority_tasks.dart';
 import 'package:flutter_mastering_course/widgets/sliver_task_list_widget.dart';
 
-import 'package:flutter_svg/flutter_svg.dart';
-
 import 'add_task_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -64,13 +62,13 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  _calculatePercent() {
+  void _calculatePercent() {
     totalTasks = tasks.length;
     totalDoneTasks = tasks.where((element) => element.isDone).length;
     percent = totalDoneTasks == 0 ? 0 : totalDoneTasks / totalTasks;
   }
 
-  _doneTask(bool? value, int? index) async {
+  Future<void> _doneTask(bool? value, int? index) async {
     setState(() {
       tasks[index!].isDone = value ?? false;
     });
@@ -79,6 +77,17 @@ class _HomeScreenState extends State<HomeScreen> {
     final taskEncode = jsonEncode(updatedTask);
     await PreferencesManager().setString("task", taskEncode);
     _calculatePercent();
+  }
+
+  // Make Shared Method.
+  _deleteTask(int? id) async {
+    if (id == null) return;
+    setState(() {
+      tasks.removeWhere((task) => task.id == id);
+      _calculatePercent();
+    });
+    final updatedTask = tasks.map((element) => element.toJson()).toList();
+    await PreferencesManager().setString("task", jsonEncode(updatedTask));
   }
 
   @override
@@ -100,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         //     'assets/images/welcome.svg',
                         //   ),
                         // ),
-                        SizedBox(width: 8),
+                        const SizedBox(width: 8),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -116,7 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
 
                     Text(
                       'Yuhuu ,Your work Is ,',
@@ -134,13 +143,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
 
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
                     ArchivedTaskWidget(
                       totalTasks: totalTasks,
                       totalDoneTasks: totalDoneTasks,
                       percent: percent,
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     HighPriorityTasks(
                       tasks: tasks,
                       onTap: (bool? value, int? index) {
@@ -163,7 +172,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               isLoading
-                  ? SliverToBoxAdapter(
+                  ? const SliverToBoxAdapter(
                       child: Center(
                         child: CircularProgressIndicator(color: Colors.white),
                       ),
@@ -172,6 +181,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       tasks: tasks,
                       onTap: (bool? value, int? index) async {
                         _doneTask(value, index);
+                      },
+                      onDelete: (int id) {
+                        _deleteTask(id);
                       },
                     ),
             ],
@@ -191,7 +203,7 @@ class _HomeScreenState extends State<HomeScreen> {
               context,
               MaterialPageRoute(
                 builder: (BuildContext conte) {
-                  return AddTaskScreen();
+                  return const AddTaskScreen();
                 },
               ),
             );
@@ -201,8 +213,8 @@ class _HomeScreenState extends State<HomeScreen> {
             }
           },
 
-          label: Text("Add New Task"),
-          icon: Icon(Icons.add),
+          label: const Text("Add New Task"),
+          icon: const Icon(Icons.add),
         ),
       ),
     );
