@@ -8,12 +8,14 @@ class SliverTaskListWidget extends StatelessWidget {
     required this.tasks,
     required this.onTap,
     this.emptyMessage,
+    required this.onEdit,
     required this.onDelete,
   });
 
   final List<TaskModel> tasks;
   final Function(bool?, int?) onTap;
   final Function(int id) onDelete;
+  final Function onEdit;
   final String? emptyMessage;
 
   @override
@@ -38,6 +40,9 @@ class SliverTaskListWidget extends StatelessWidget {
                   },
                   onDelete: (int id) {
                     onDelete(id);
+                  },
+                  onEdit: () {
+                    onEdit();
                   },
                 );
               },
