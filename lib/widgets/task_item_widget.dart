@@ -154,6 +154,7 @@ class TaskItemWidget extends StatelessWidget {
 
     return showModalBottomSheet<bool>(
       context: context,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       builder: (BuildContext context) {
         return StatefulBuilder(
           builder: (BuildContext context, void Function(void Function()) setState) {
@@ -203,7 +204,8 @@ class TaskItemWidget extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Spacer(),
+
+                    // Spacer(),
                     ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
                         fixedSize: Size(MediaQuery.of(context).size.width, 40),
