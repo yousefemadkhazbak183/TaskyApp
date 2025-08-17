@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_mastering_course/core/services/preferences_manager.dart';
 import 'package:flutter_mastering_course/core/theme/theme_controller.dart';
 import 'package:flutter_mastering_course/core/widgets/custom_svg_picture.dart';
 import 'package:flutter_mastering_course/screens/user_details_screen.dart';
 import 'package:flutter_mastering_course/screens/welcome_screen.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -17,6 +21,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String? motivationQuote;
   bool isLoading = true;
 
+  String? imagePath;
+
   @override
   void initState() {
     super.initState();
@@ -27,6 +33,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     setState(() {
       username = PreferencesManager().getString('username') ?? '';
       motivationQuote = PreferencesManager().getString('motivation_quote');
+      imagePath = PreferencesManager().getString('image_path');
       isLoading = false;
     });
   }
@@ -55,17 +62,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         Stack(
                           alignment: Alignment.bottomRight,
                           children: [
-                            const CircleAvatar(
-                              backgroundImage: AssetImage(
-                                'assets/images/profile.png',
-                              ),
+                            CircleAvatar(
+                              backgroundImage: imagePath == null
+                                  ? const AssetImage(
+                                      'assets/images/profile.png',
+                                    )
+                                  : FileImage(File(imagePath!)),
                               radius: 60,
                               backgroundColor: Colors.transparent,
                             ),
 
                             // Camera for change image
                             GestureDetector(
-                              onTap: () {},
+                              onTap: () async {
+                                _showDialogImagePicker(context, (XFile file) {
+                                  _saveImage(file);
+                                  setState(() {
+                                    imagePath = file.path;
+                                  });
+                                });
+                              },
                               child: Container(
                                 width: 45,
                                 height: 45,
@@ -198,4 +214,69 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           );
   }
+
+  void _saveImage(XFile file) async {
+    final appDir = await getApplicationDocumentsDirectory();
+    final newFile = await File(file.path).copy("${appDir.path}/${file.name}");
+    PreferencesManager().setString('image_path', newFile.path);
+  }
+}
+
+void _showDialogImagePicker(
+  BuildContext context,
+  Function(XFile) selectedImage,
+) {
+  showDialog(
+    context: context,
+    builder: (context) {
+      return SimpleDialog(
+        title: Text(
+          'Choose Image',
+          style: Theme.of(context).textTheme.displayLarge,
+        ),
+        children: [
+          SimpleDialogOption(
+            padding: const EdgeInsets.all(16),
+            onPressed: () async {
+              Navigator.pop(context);
+
+              XFile? image = await ImagePicker().pickImage(
+                source: ImageSource.camera,
+              );
+              if (image != null) {
+                selectedImage(image);
+              }
+            },
+            child: const Row(
+              children: [
+                Icon(Icons.camera_alt),
+                SizedBox(height: 8),
+                Text('Camera'),
+              ],
+            ),
+          ),
+          SimpleDialogOption(
+            padding: const EdgeInsets.all(16),
+
+            onPressed: () async {
+              Navigator.pop(context);
+              XFile? image = await ImagePicker().pickImage(
+                source: ImageSource.gallery,
+              );
+              if (image != null) {
+                selectedImage(image);
+              }
+            },
+            child: const Row(
+              children: [
+                Icon(Icons.photo_library),
+                SizedBox(height: 8),
+                Text('Gallery'),
+              ],
+            ),
+          ),
+        ],
+      );
+    },
+  );
 }
