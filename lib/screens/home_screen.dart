@@ -1,8 +1,9 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_mastering_course/core/services/preferences_manager.dart'
-    show PreferencesManager;
+import 'package:flutter_mastering_course/core/services/preferences_manager.dart';
+
 import 'package:flutter_mastering_course/core/widgets/custom_svg_picture.dart';
 
 import 'package:flutter_mastering_course/model/task_model.dart';
@@ -21,6 +22,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   String? username;
+  String? userImagePath;
   List<TaskModel> tasks = [];
   bool isLoading = false;
   int totalTasks = 0;
@@ -40,6 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void _loadUsername() async {
     setState(() {
       username = PreferencesManager().getString('username');
+      userImagePath = PreferencesManager().getString('image_path');
     });
   }
 
@@ -104,11 +107,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     Row(
                       children: [
-                        // CircleAvatar(
-                        //   backgroundImage: AssetImage(
-                        //     'assets/images/welcome.svg',
-                        //   ),
-                        // ),
+                        CircleAvatar(
+                          backgroundImage: userImagePath == null
+                              ? const AssetImage('assets/images/profile.png')
+                              : FileImage(File(userImagePath!)),
+                        ),
                         const SizedBox(width: 8),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
