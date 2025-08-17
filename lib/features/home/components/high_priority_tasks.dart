@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mastering_course/core/theme/theme_controller.dart';
 import 'package:flutter_mastering_course/core/widgets/custom_check_box.dart';
 import 'package:flutter_mastering_course/model/task_model.dart';
-import 'package:flutter_mastering_course/screens/high_priority_screen.dart';
+import 'package:flutter_mastering_course/features/tasks/high_priority_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class HighPriorityTasks extends StatelessWidget {

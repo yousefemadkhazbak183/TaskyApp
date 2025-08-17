@@ -3,8 +3,8 @@ import 'package:flutter_mastering_course/core/services/preferences_manager.dart'
 import 'package:flutter_mastering_course/core/theme/dark_theme.dart';
 import 'package:flutter_mastering_course/core/theme/light_theme.dart';
 import 'package:flutter_mastering_course/core/theme/theme_controller.dart';
-import 'package:flutter_mastering_course/screens/main_screen.dart';
-import 'package:flutter_mastering_course/screens/welcome_screen.dart';
+import 'package:flutter_mastering_course/features/navigation/main_screen.dart';
+import 'package:flutter_mastering_course/features/welcome/welcome_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

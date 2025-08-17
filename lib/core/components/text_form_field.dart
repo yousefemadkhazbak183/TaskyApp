@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mastering_course/core/services/preferences_manager.dart';
-import 'package:flutter_mastering_course/screens/main_screen.dart';
+import 'package:flutter_mastering_course/features/navigation/main_screen.dart';
 
 class TextFormFieldWidget extends StatelessWidget {
   TextFormFieldWidget({super.key});
@@ -37,7 +37,9 @@ class TextFormFieldWidget extends StatelessWidget {
                   'username',
                   controller.value.text,
                 );
-                final String? username = PreferencesManager().getString('username');
+                final String? username = PreferencesManager().getString(
+                  'username',
+                );
                 print(username);
                 Navigator.pushReplacement(
                   context,

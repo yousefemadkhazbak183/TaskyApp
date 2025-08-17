@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mastering_course/screens/home_screen.dart';
-import 'package:flutter_mastering_course/screens/profile_screen.dart'
+import 'package:flutter_mastering_course/features/home/home_screen.dart';
+import 'package:flutter_mastering_course/features/profile/profile_screen.dart'
     show ProfileScreen;
-import 'package:flutter_mastering_course/screens/task_completed_screen.dart';
-import 'package:flutter_mastering_course/screens/todo_screen.dart';
+import 'package:flutter_mastering_course/features/tasks/task_completed_screen.dart';
+import 'package:flutter_mastering_course/features/tasks/todo_screen.dart';
 import 'package:flutter_svg/svg.dart';
 
 class MainScreen extends StatefulWidget {
@@ -43,7 +43,9 @@ class _MainScreenState extends State<MainScreen> {
             icon: SvgPicture.asset(
               "assets/images/home.svg",
               colorFilter: ColorFilter.mode(
-                _currentScreen == 0 ? const Color(0xFF15B86C) : const Color(0xFFC6C6C6),
+                _currentScreen == 0
+                    ? const Color(0xFF15B86C)
+                    : const Color(0xFFC6C6C6),
                 BlendMode.srcIn,
               ),
             ),
@@ -53,7 +55,9 @@ class _MainScreenState extends State<MainScreen> {
             icon: SvgPicture.asset(
               "assets/images/todo.svg",
               colorFilter: ColorFilter.mode(
-                _currentScreen == 1 ? const Color(0xFF15B86C) : const Color(0xFFC6C6C6),
+                _currentScreen == 1
+                    ? const Color(0xFF15B86C)
+                    : const Color(0xFFC6C6C6),
                 BlendMode.srcIn,
               ),
             ),
@@ -63,7 +67,9 @@ class _MainScreenState extends State<MainScreen> {
             icon: SvgPicture.asset(
               "assets/images/task_complete.svg",
               colorFilter: ColorFilter.mode(
-                _currentScreen == 2 ? const Color(0xFF15B86C) : const Color(0xFFC6C6C6),
+                _currentScreen == 2
+                    ? const Color(0xFF15B86C)
+                    : const Color(0xFFC6C6C6),
                 BlendMode.srcIn,
               ),
             ),
@@ -73,7 +79,9 @@ class _MainScreenState extends State<MainScreen> {
             icon: SvgPicture.asset(
               "assets/images/profile.svg",
               colorFilter: ColorFilter.mode(
-                _currentScreen == 3 ? const Color(0xFF15B86C) : const Color(0xFFC6C6C6),
+                _currentScreen == 3
+                    ? const Color(0xFF15B86C)
+                    : const Color(0xFFC6C6C6),
                 BlendMode.srcIn,
               ),
             ),
