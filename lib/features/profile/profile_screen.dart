@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mastering_course/core/services/preferences_manager.dart';
 import 'package:flutter_mastering_course/core/theme/theme_controller.dart';
 import 'package:flutter_mastering_course/core/widgets/custom_svg_picture.dart';
-import 'package:flutter_mastering_course/screens/user_details_screen.dart';
-import 'package:flutter_mastering_course/screens/welcome_screen.dart';
+import 'package:flutter_mastering_course/features/profile/user_details_screen.dart';
+import 'package:flutter_mastering_course/features/welcome/welcome_screen.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 

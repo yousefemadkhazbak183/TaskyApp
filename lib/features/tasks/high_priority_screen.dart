@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_mastering_course/core/services/preferences_manager.dart'
     show PreferencesManager;
-import 'package:flutter_mastering_course/core/widgets/task_list_widgets.dart';
+import 'package:flutter_mastering_course/core/components/task_list_widgets.dart';
 import 'package:flutter_mastering_course/model/task_model.dart';
 
 class HighPriorityScreen extends StatefulWidget {

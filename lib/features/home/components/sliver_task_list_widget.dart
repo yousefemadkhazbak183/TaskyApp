@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mastering_course/model/task_model.dart';
-import 'package:flutter_mastering_course/widgets/task_item_widget.dart';
+import 'package:flutter_mastering_course/core/components/task_item_widget.dart';
 
 class SliverTaskListWidget extends StatelessWidget {
   const SliverTaskListWidget({

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mastering_course/core/widgets/custom_svg_picture.dart';
 
-import 'package:flutter_mastering_course/widgets/text_form_field.dart';
+import 'package:flutter_mastering_course/core/components/text_form_field.dart';
 
 class WelcomeScreen extends StatelessWidget {
   WelcomeScreen({super.key});
