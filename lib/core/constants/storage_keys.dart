@@ -3,4 +3,5 @@ class StorageKeys {
   static const String imagePath = "image_path";
   static const String task = "task";
   static const String motivationQuote = "motivation_quote";
+  static const String theme = 'theme';
 }
