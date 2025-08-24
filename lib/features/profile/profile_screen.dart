@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_mastering_course/core/constants/storage_keys.dart';
 import 'package:flutter_mastering_course/core/services/preferences_manager.dart';
 import 'package:flutter_mastering_course/core/theme/theme_controller.dart';
 import 'package:flutter_mastering_course/core/widgets/custom_svg_picture.dart';
@@ -31,9 +32,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   void _loadUsername() async {
     setState(() {
-      username = PreferencesManager().getString('username') ?? '';
-      motivationQuote = PreferencesManager().getString('motivation_quote');
-      imagePath = PreferencesManager().getString('image_path');
+      username = PreferencesManager().getString(StorageKeys.username) ?? '';
+      motivationQuote = PreferencesManager().getString(
+        StorageKeys.motivationQuote,
+      );
+      imagePath = PreferencesManager().getString(StorageKeys.imagePath);
       isLoading = false;
     });
   }
@@ -181,9 +184,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   const SizedBox(height: 20),
                   ListTile(
                     onTap: () async {
-                      PreferencesManager().remove('username');
-                      PreferencesManager().remove('motivation_quote');
-                      PreferencesManager().remove('task');
+                      PreferencesManager().remove(StorageKeys.username);
+                      PreferencesManager().remove(StorageKeys.motivationQuote);
+                      PreferencesManager().remove(StorageKeys.task);
                       Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
@@ -218,7 +221,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void _saveImage(XFile file) async {
     final appDir = await getApplicationDocumentsDirectory();
     final newFile = await File(file.path).copy("${appDir.path}/${file.name}");
-    PreferencesManager().setString('image_path', newFile.path);
+    PreferencesManager().setString(StorageKeys.imagePath, newFile.path);
   }
 }
 

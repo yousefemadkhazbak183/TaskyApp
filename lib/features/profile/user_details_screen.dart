@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mastering_course/core/constants/storage_keys.dart';
 import 'package:flutter_mastering_course/core/services/preferences_manager.dart';
 import 'package:flutter_mastering_course/core/widgets/custom_text_form_field.dart';
 
@@ -81,11 +82,11 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
                       await PreferencesManager().setString(
-                        'username',
+                        StorageKeys.username,
                         userNameController.value.text,
                       );
                       await PreferencesManager().setString(
-                        'motivation_quote',
+                        StorageKeys.motivationQuote,
                         motivationQuoteController.value.text,
                       );
                       Navigator.pop(context, true);

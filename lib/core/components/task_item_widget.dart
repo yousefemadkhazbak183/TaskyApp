@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_mastering_course/core/constants/storage_keys.dart';
 import 'package:flutter_mastering_course/core/services/preferences_manager.dart';
 import 'package:flutter_mastering_course/core/theme/theme_controller.dart';
 import 'package:flutter_mastering_course/core/widgets/custom_check_box.dart';
@@ -213,7 +214,7 @@ class TaskItemWidget extends StatelessWidget {
                       onPressed: () async {
                         if (key.currentState?.validate() ?? false) {
                           final taskJson = PreferencesManager().getString(
-                            'task',
+                            StorageKeys.task,
                           );
 
                           List<dynamic> listTask = [];
@@ -236,7 +237,7 @@ class TaskItemWidget extends StatelessWidget {
 
                           final taskEncode = jsonEncode(listTask);
                           await PreferencesManager().setString(
-                            "task",
+                            StorageKeys.task,
                             taskEncode,
                           );
                           Navigator.of(context).pop(true);
