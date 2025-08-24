@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_mastering_course/core/constants/storage_keys.dart';
 import 'package:flutter_mastering_course/core/services/preferences_manager.dart';
 
 import 'package:flutter_mastering_course/core/widgets/custom_svg_picture.dart';
@@ -41,8 +42,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _loadUsername() async {
     setState(() {
-      username = PreferencesManager().getString('username');
-      userImagePath = PreferencesManager().getString('image_path');
+      username = PreferencesManager().getString(StorageKeys.username);
+      userImagePath = PreferencesManager().getString(StorageKeys.imagePath);
     });
   }
 
@@ -51,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
       isLoading = true;
     });
 
-    final finalTasks = PreferencesManager().getString('task');
+    final finalTasks = PreferencesManager().getString(StorageKeys.task);
     if (finalTasks != null) {
       final taskAfterDecode = jsonDecode(finalTasks) as List<dynamic>;
 
@@ -78,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     final updatedTask = tasks.map((element) => element.toJson()).toList();
     final taskEncode = jsonEncode(updatedTask);
-    await PreferencesManager().setString("task", taskEncode);
+    await PreferencesManager().setString(StorageKeys.task, taskEncode);
     _calculatePercent();
   }
 
@@ -90,7 +91,10 @@ class _HomeScreenState extends State<HomeScreen> {
       _calculatePercent();
     });
     final updatedTask = tasks.map((element) => element.toJson()).toList();
-    await PreferencesManager().setString("task", jsonEncode(updatedTask));
+    await PreferencesManager().setString(
+      StorageKeys.task,
+      jsonEncode(updatedTask),
+    );
   }
 
   @override
