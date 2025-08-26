@@ -1,123 +1,55 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_mastering_course/core/constants/storage_keys.dart';
-import 'package:flutter_mastering_course/core/services/preferences_manager.dart'
-    show PreferencesManager;
-import 'package:flutter_mastering_course/core/components/task_list_widgets.dart';
-import 'package:flutter_mastering_course/model/task_model.dart';
 
-class HighPriorityScreen extends StatefulWidget {
+import 'package:flutter_mastering_course/core/components/task_list_widgets.dart';
+import 'package:flutter_mastering_course/features/tasks/controllers/tasks_controller.dart';
+
+import 'package:provider/provider.dart';
+
+class HighPriorityScreen extends StatelessWidget {
   const HighPriorityScreen({super.key});
 
   @override
-  State<HighPriorityScreen> createState() => _HighPriorityScreenState();
-}
-
-class _HighPriorityScreenState extends State<HighPriorityScreen> {
-  List<TaskModel> highPriorityTasks = [];
-  bool isLoading = false;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _loadTask();
-  }
-
-  void _loadTask() async {
-    setState(() {
-      isLoading = true;
-    });
-
-    final finalTasks = PreferencesManager().getString(StorageKeys.task);
-    if (finalTasks != null) {
-      final taskAfterDecode = jsonDecode(finalTasks) as List<dynamic>;
-
-      setState(() {
-        highPriorityTasks = taskAfterDecode
-            .map((e) => TaskModel.fromJson(e))
-            .where((element) => element.isHighPriority)
-            .toList()
-            .reversed
-            .toList();
-      });
-    }
-    setState(() {
-      isLoading = false;
-    });
-  }
-
-  _deleteTask(int? id) async {
-    List<TaskModel> deleteTask = [];
-    if (id == null) return;
-    final finalTasks = PreferencesManager().getString(StorageKeys.task);
-    if (finalTasks != null) {
-      final taskAfterDecode = jsonDecode(finalTasks) as List<dynamic>;
-      deleteTask = taskAfterDecode.map((e) => TaskModel.fromJson(e)).toList();
-      deleteTask.removeWhere((e) => e.id == id);
-
-      setState(() {
-        highPriorityTasks.removeWhere((task) => task.id == id);
-      });
-      final updatedTask = deleteTask
-          .map((element) => element.toJson())
-          .toList();
-      await PreferencesManager().setString(
-        StorageKeys.task,
-        jsonEncode(updatedTask),
-      );
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('High Priority Tasks'),
-        centerTitle: false,
-      ),
+    return ChangeNotifierProvider<TasksController>(
+      create: (_) => TasksController()..init(),
+      builder: (context, child) {
+        final controller = context.read<TasksController>();
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('High Priority Tasks'),
+            centerTitle: false,
+          ),
 
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: isLoading
-            ? const Center(
-                child: CircularProgressIndicator(color: Colors.white),
-              )
-            : TaskListWidgets(
-                tasks: highPriorityTasks,
-                onTap: (value, index) async {
-                  setState(() {
-                    highPriorityTasks[index!].isDone = value ?? false;
-                  });
-
-                  final allData = PreferencesManager().getString(
-                    StorageKeys.task,
-                  );
-                  if (allData != null) {
-                    final List<TaskModel> allDataList =
-                        (jsonDecode(allData) as List)
-                            .map((element) => TaskModel.fromJson(element))
-                            .toList();
-                    final int newIndex = allDataList.indexWhere(
-                      (e) => e.id == highPriorityTasks[index!].id,
-                    );
-                    allDataList[newIndex] = highPriorityTasks[index!];
-                    await PreferencesManager().setString(
-                      StorageKeys.task,
-                      jsonEncode(allDataList),
-                    );
-                    _loadTask();
-                  }
-                },
-                onDelete: (int id) {
-                  _deleteTask(id);
-                },
-                onEdit: () {
-                  _loadTask();
-                },
-              ),
-      ),
+          body: Padding(
+            padding: const EdgeInsets.all(16),
+            child: controller.isLoading
+                ? const Center(
+                    child: CircularProgressIndicator(color: Colors.white),
+                  )
+                : Consumer<TasksController>(
+                    builder:
+                        (
+                          BuildContext context,
+                          TasksController value,
+                          Widget? child,
+                        ) {
+                          return TaskListWidgets(
+                            tasks: value.highPriorityTasks,
+                            onTap: (value, index) async {
+                              controller.highPriorityDoneTasks(value, index);
+                            },
+                            onDelete: (int id) {
+                              controller.deleteTask(id);
+                            },
+                            onEdit: () {
+                              controller.init();
+                            },
+                          );
+                        },
+                  ),
+          ),
+        );
+      },
     );
   }
 }
