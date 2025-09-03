@@ -34,13 +34,16 @@ class TaskCompletedScreen extends StatelessWidget {
                       builder:
                           (
                             BuildContext context,
-                            TasksController value,
+                            TasksController valueController,
                             Widget? child,
                           ) {
                             return TaskListWidgets(
-                              tasks: value.completeTasks,
+                              tasks: valueController.completeTasks,
                               onTap: (value, index) async {
-                                controller.doneCompleteTasks(value, index);
+                                controller.doneTasks(
+                                  value,
+                                  valueController.completeTasks[index!].id,
+                                );
                               },
                               onDelete: (int id) {
                                 controller.deleteTask(id);

@@ -32,13 +32,16 @@ class TodoScreen extends StatelessWidget {
                       builder:
                           (
                             BuildContext context,
-                            TasksController value,
+                            TasksController valueController,
                             Widget? child,
                           ) {
                             return TaskListWidgets(
-                              tasks: value.todoTasks,
+                              tasks: valueController.todoTasks,
                               onTap: (value, index) {
-                                controller.doneTasks(value, index);
+                                controller.doneTasks(
+                                  value,
+                                  valueController.todoTasks[index!].id,
+                                );
                               },
                               onDelete: (int id) {
                                 controller.deleteTask(id);
