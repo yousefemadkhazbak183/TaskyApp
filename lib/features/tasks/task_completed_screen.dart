@@ -10,55 +10,51 @@ class TaskCompletedScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<TasksController>(
-      create: (_) => TasksController()..init(),
-      builder: (context, child) {
-        final controller = context.read<TasksController>();
-        return SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(18.0),
-                child: Text(
-                  'Completed Tasks',
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: controller.isLoading
-                      ? const Center(
-                          child: CircularProgressIndicator(color: Colors.white),
-                        )
-                      : Consumer<TasksController>(
-                          builder:
-                              (
-                                BuildContext context,
-                                TasksController value,
-                                Widget? child,
-                              ) {
-                                return TaskListWidgets(
-                                  tasks: value.completeTasks,
-                                  onTap: (value, index) async {
-                                    controller.doneCompleteTasks(value, index);
-                                  },
-                                  onDelete: (int id) {
-                                    controller.deleteTask(id);
-                                  },
-                                  onEdit: () {
-                                    controller.init();
-                                  },
-                                );
-                              },
-                        ),
-                ),
-              ),
-            ],
+    final controller = context.read<TasksController>();
+
+    return SafeArea(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(18.0),
+            child: Text(
+              'Completed Tasks',
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
           ),
-        );
-      },
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: controller.isLoading
+                  ? const Center(
+                      child: CircularProgressIndicator(color: Colors.white),
+                    )
+                  : Consumer<TasksController>(
+                      builder:
+                          (
+                            BuildContext context,
+                            TasksController value,
+                            Widget? child,
+                          ) {
+                            return TaskListWidgets(
+                              tasks: value.completeTasks,
+                              onTap: (value, index) async {
+                                controller.doneCompleteTasks(value, index);
+                              },
+                              onDelete: (int id) {
+                                controller.deleteTask(id);
+                              },
+                              onEdit: () {
+                                controller.init();
+                              },
+                            );
+                          },
+                    ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

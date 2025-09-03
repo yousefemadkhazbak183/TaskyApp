@@ -12,6 +12,9 @@ class TasksController with ChangeNotifier {
   List<TaskModel> todoTasks = [];
   List<TaskModel> completeTasks = [];
   List<TaskModel> highPriorityTasks = [];
+  int totalTasks = 0;
+  int totalDoneTasks = 0;
+  double percent = 0;
 
   TasksController() {
     init();
@@ -40,7 +43,7 @@ class TasksController with ChangeNotifier {
           .reversed
           .toList();
 
-      // calculatePercent();
+      calculatePercent();
     }
 
     isLoading = false;
@@ -63,15 +66,24 @@ class TasksController with ChangeNotifier {
       StorageKeys.task,
       jsonEncode(updatedTask),
     );
-
+    calculatePercent();
     notifyListeners();
   }
 
   // [doneTasks]
   void doneTasks(bool? value, int? index) async {
+    myTasks[index!].isDone = value ?? false;
+    calculatePercent();
+    final updatedTask = myTasks.map((e) => e.toJson()).toList();
+    PreferencesManager().setString(StorageKeys.task, jsonEncode(updatedTask));
+
+    notifyListeners();
+  }
+
+  void doneToDoTasks(bool? value, int? index) async {
     if (index == null) return;
     todoTasks[index].isDone = value ?? false;
-
+    calculatePercent();
     final int newIndex = myTasks.indexWhere((e) => e.id == todoTasks[index].id);
 
     myTasks[newIndex] = todoTasks[index];
@@ -91,11 +103,6 @@ class TasksController with ChangeNotifier {
     myTasks[newIndex] = completeTasks[index];
     await PreferencesManager().setString(StorageKeys.task, jsonEncode(myTasks));
 
-    completeTasks[index].isDone = value ?? false;
-
-    myTasks[newIndex] = completeTasks[index];
-    await PreferencesManager().setString(StorageKeys.task, jsonEncode(myTasks));
-
     _loadTasks();
   }
 
@@ -111,11 +118,14 @@ class TasksController with ChangeNotifier {
     myTasks[newIndex] = highPriorityTasks[index];
     await PreferencesManager().setString(StorageKeys.task, jsonEncode(myTasks));
 
-    highPriorityTasks[index].isDone = value ?? false;
-
-    myTasks[newIndex] = highPriorityTasks[index];
-    await PreferencesManager().setString(StorageKeys.task, jsonEncode(myTasks));
-
     _loadTasks();
+  }
+
+  void calculatePercent() {
+    totalTasks = myTasks.length;
+    totalDoneTasks = myTasks.where((element) => element.isDone).length;
+    percent = totalDoneTasks == 0 ? 0 : totalDoneTasks / totalTasks;
+
+    notifyListeners();
   }
 }

@@ -2,7 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_mastering_course/core/theme/theme_controller.dart';
-import 'package:flutter_mastering_course/features/home/home_controller.dart';
+
+import 'package:flutter_mastering_course/features/tasks/controllers/tasks_controller.dart';
 import 'package:provider/provider.dart';
 
 class ArchivedTaskWidget extends StatelessWidget {
@@ -10,8 +11,8 @@ class ArchivedTaskWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<HomeController>(
-      builder: (BuildContext context, HomeController controller, Widget? child) {
+    return Consumer<TasksController>(
+      builder: (BuildContext context, TasksController controller, Widget? child) {
         return Container(
           width: double.infinity,
           padding: const EdgeInsets.all(16),

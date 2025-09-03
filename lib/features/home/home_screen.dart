@@ -8,6 +8,7 @@ import 'package:flutter_mastering_course/features/home/home_controller.dart';
 import 'package:flutter_mastering_course/features/home/components/achived_task_widget.dart';
 import 'package:flutter_mastering_course/features/home/components/high_priority_tasks.dart';
 import 'package:flutter_mastering_course/features/home/components/sliver_task_list_widget.dart';
+import 'package:flutter_mastering_course/features/tasks/controllers/tasks_controller.dart';
 import 'package:provider/provider.dart';
 
 import '../add_tasks/add_task_screen.dart';
@@ -138,7 +139,7 @@ class HomeScreen extends StatelessWidget {
                   );
 
                   if (result != null && result) {
-                    context.read<HomeController>().loadTask();
+                    context.read<TasksController>().init();
                   }
                 },
 

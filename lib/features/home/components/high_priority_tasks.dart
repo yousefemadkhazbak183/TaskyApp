@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mastering_course/core/theme/theme_controller.dart';
 import 'package:flutter_mastering_course/core/widgets/custom_check_box.dart';
-import 'package:flutter_mastering_course/features/home/home_controller.dart';
+
+import 'package:flutter_mastering_course/features/tasks/controllers/tasks_controller.dart';
 import 'package:flutter_mastering_course/features/tasks/high_priority_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -11,9 +12,9 @@ class HighPriorityTasks extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<HomeController>(
+    return Consumer<TasksController>(
       builder:
-          (BuildContext context, HomeController controller, Widget? child) {
+          (BuildContext context, TasksController controller, Widget? child) {
             return Container(
               padding: const EdgeInsets.all(16),
               width: double.infinity,
@@ -40,7 +41,7 @@ class HighPriorityTasks extends StatelessWidget {
                           style: Theme.of(context).textTheme.headlineSmall,
                         ),
                         const SizedBox(height: 8),
-                        ...controller.tasks.reversed
+                        ...controller.myTasks.reversed
                             .where((e) => e.isHighPriority)
                             .take(4)
                             .map((element) {
@@ -49,12 +50,14 @@ class HighPriorityTasks extends StatelessWidget {
                                   CustomCheckBox(
                                     value: element.isDone,
                                     onChanged: (bool? value) {
-                                      final index = controller.tasks.indexWhere(
-                                        (e) {
-                                          return e.id == element.id;
-                                        },
+                                      final index = controller.myTasks
+                                          .indexWhere((e) {
+                                            return e.id == element.id;
+                                          });
+                                      controller.highPriorityDoneTasks(
+                                        value,
+                                        index,
                                       );
-                                      controller.doneTask(value, index);
                                     },
                                   ),
 
@@ -86,7 +89,7 @@ class HighPriorityTasks extends StatelessWidget {
                           },
                         ),
                       );
-                      controller.loadTask();
+                      controller.init();
                     },
                     child: Container(
                       padding: const EdgeInsets.all(8),

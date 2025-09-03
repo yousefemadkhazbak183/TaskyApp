@@ -10,46 +10,41 @@ class HighPriorityScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<TasksController>(
-      create: (_) => TasksController()..init(),
-      builder: (context, child) {
-        final controller = context.read<TasksController>();
-        return Scaffold(
-          appBar: AppBar(
-            title: const Text('High Priority Tasks'),
-            centerTitle: false,
-          ),
+    final controller = context.read<TasksController>();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('High Priority Tasks'),
+        centerTitle: false,
+      ),
 
-          body: Padding(
-            padding: const EdgeInsets.all(16),
-            child: controller.isLoading
-                ? const Center(
-                    child: CircularProgressIndicator(color: Colors.white),
-                  )
-                : Consumer<TasksController>(
-                    builder:
-                        (
-                          BuildContext context,
-                          TasksController value,
-                          Widget? child,
-                        ) {
-                          return TaskListWidgets(
-                            tasks: value.highPriorityTasks,
-                            onTap: (value, index) async {
-                              controller.highPriorityDoneTasks(value, index);
-                            },
-                            onDelete: (int id) {
-                              controller.deleteTask(id);
-                            },
-                            onEdit: () {
-                              controller.init();
-                            },
-                          );
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: controller.isLoading
+            ? const Center(
+                child: CircularProgressIndicator(color: Colors.white),
+              )
+            : Consumer<TasksController>(
+                builder:
+                    (
+                      BuildContext context,
+                      TasksController value,
+                      Widget? child,
+                    ) {
+                      return TaskListWidgets(
+                        tasks: value.highPriorityTasks,
+                        onTap: (value, index) async {
+                          controller.highPriorityDoneTasks(value, index);
                         },
-                  ),
-          ),
-        );
-      },
+                        onDelete: (int id) {
+                          controller.deleteTask(id);
+                        },
+                        onEdit: () {
+                          controller.init();
+                        },
+                      );
+                    },
+              ),
+      ),
     );
   }
 }
