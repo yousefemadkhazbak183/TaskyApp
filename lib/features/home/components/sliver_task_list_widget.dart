@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mastering_course/features/home/home_controller.dart';
+
 import 'package:flutter_mastering_course/core/components/task_item_widget.dart';
+import 'package:flutter_mastering_course/features/tasks/controllers/tasks_controller.dart';
 import 'package:provider/provider.dart';
 
 class SliverTaskListWidget extends StatelessWidget {
@@ -8,16 +9,16 @@ class SliverTaskListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<HomeController>(
+    return Consumer<TasksController>(
       builder:
-          (BuildContext context, HomeController controller, Widget? child) {
+          (BuildContext context, TasksController controller, Widget? child) {
             return controller.isLoading
                 ? const SliverToBoxAdapter(
                     child: Center(
                       child: CircularProgressIndicator(color: Colors.white),
                     ),
                   )
-                : controller.tasks.isEmpty
+                : controller.myTasks.isEmpty
                 ? SliverToBoxAdapter(
                     child: Center(
                       child: Text(
@@ -31,17 +32,17 @@ class SliverTaskListWidget extends StatelessWidget {
                     sliver: SliverList.separated(
                       itemBuilder: (BuildContext context, int index) {
                         return TaskItemWidget(
-                          model: controller.tasks[index],
+                          model: controller.myTasks[index],
                           onChanged: (bool? value) {
-                            controller.doneTask(value, index);
+                            controller.doneTasks(value, index);
                           },
                           onDelete: (int id) {
                             controller.deleteTask(id);
                           },
-                          onEdit: () => controller.loadTask(),
+                          onEdit: () => controller.init(),
                         );
                       },
-                      itemCount: controller.tasks.length,
+                      itemCount: controller.myTasks.length,
                       separatorBuilder: (BuildContext context, int index) {
                         return const SizedBox(height: 8);
                       },
