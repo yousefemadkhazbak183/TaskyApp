@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 ThemeData lightTheme = ThemeData(
   useMaterial3: true,
@@ -17,10 +18,10 @@ ThemeData lightTheme = ThemeData(
     backgroundColor: Color(0xFF15B86C),
     foregroundColor: Color(0xFFFFFFCF),
   ),
-  appBarTheme: const AppBarTheme(
-    backgroundColor: Color(0xFFF6F7F9),
+  appBarTheme: AppBarTheme(
+    backgroundColor: const Color(0xFFF6F7F9),
     centerTitle: false,
-    titleTextStyle: TextStyle(color: Color(0xFFFFFCFC), fontSize: 20),
+    titleTextStyle: TextStyle(color: const Color(0xFFFFFCFC), fontSize: 20.sp),
   ),
   switchTheme: SwitchThemeData(
     trackColor: WidgetStateProperty.resolveWith((states) {
@@ -56,50 +57,50 @@ ThemeData lightTheme = ThemeData(
     ),
   ),
 
-  textTheme: const TextTheme(
+  textTheme: TextTheme(
     displayMedium: TextStyle(
-      fontSize: 28,
+      fontSize: 28.sp,
       fontWeight: FontWeight.w400,
-      color: Color(0xFF161F1B),
+      color: const Color(0xFF161F1B),
     ),
     displaySmall: TextStyle(
-      fontSize: 24,
+      fontSize: 24.sp,
       fontWeight: FontWeight.w400,
-      color: Color(0xFF161F1B),
+      color: const Color(0xFF161F1B),
     ),
     displayLarge: TextStyle(
-      fontSize: 32,
-      color: Color(0xFF161F1B),
+      fontSize: 32.sp,
+      color: const Color(0xFF161F1B),
       fontWeight: FontWeight.w400,
     ),
     titleMedium: TextStyle(
-      fontSize: 16,
-      color: Color(0xFF161F1B),
+      fontSize: 16.sp,
+      color: const Color(0xFF161F1B),
       fontWeight: FontWeight.w400,
     ),
     titleSmall: TextStyle(
-      fontSize: 14,
-      color: Color(0xFF3A4640),
+      fontSize: 14.sp,
+      color: const Color(0xFF3A4640),
       fontWeight: FontWeight.w400,
     ),
     titleLarge: TextStyle(
-      color: Color(0xFF6A6A6A),
-      fontSize: 16,
+      color: const Color(0xFF6A6A6A),
+      fontSize: 16.sp,
       fontWeight: FontWeight.w400,
       decoration: TextDecoration.lineThrough,
-      decorationColor: Color(0xFF49454F),
+      decorationColor: const Color(0xFF49454F),
       overflow: TextOverflow.ellipsis,
     ),
-    labelSmall: TextStyle(color: Colors.black, fontSize: 16),
-    headlineSmall: TextStyle(color: Color(0xFF15B86c), fontSize: 14),
+    labelSmall: TextStyle(color: Colors.black, fontSize: 16.sp),
+    headlineSmall: TextStyle(color: const Color(0xFF15B86c), fontSize: 14.sp),
     bodyMedium: TextStyle(
-      fontSize: 20,
-      color: Color(0xFF161F1B),
+      fontSize: 20.sp,
+      color: const Color(0xFF161F1B),
       fontWeight: FontWeight.w400,
     ),
   ),
   inputDecorationTheme: InputDecorationTheme(
-    hintStyle: const TextStyle(color: Color(0xFF3A4640), fontSize: 16),
+    hintStyle: TextStyle(color: const Color(0xFF3A4640), fontSize: 16.sp),
     filled: true,
     fillColor: const Color(0xFFFFFFFF),
     focusColor: const Color(0xFFD1DAD6),
@@ -125,7 +126,7 @@ ThemeData lightTheme = ThemeData(
   ),
 
   checkboxTheme: CheckboxThemeData(
-    side: const BorderSide(color: Color(0xFFD1DAD6), width: 2),
+    side: BorderSide(color: const Color(0xFFD1DAD6), width: 2.w),
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
   ),
   iconTheme: const IconThemeData(color: Color(0xFF161F1B)),
@@ -137,12 +138,12 @@ ThemeData lightTheme = ThemeData(
   ),
   splashFactory: NoSplash.splashFactory,
   popupMenuTheme: PopupMenuThemeData(
-    color: Color(0xFFF6F7F9),
+    color: const Color(0xFFF6F7F9),
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(16),
-      side: BorderSide(color: Color(0xFF15B86C), width: 2),
+      side: BorderSide(color: const Color(0xFF15B86C), width: 2.w),
     ),
     elevation: 2,
-    shadowColor: Color(0xFF15B86C),
+    shadowColor: const Color(0xFF15B86C),
   ),
 );

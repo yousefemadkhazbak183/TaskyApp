@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mastering_course/core/widgets/custom_svg_picture.dart';
 
 import 'package:flutter_mastering_course/core/components/text_form_field.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class WelcomeScreen extends StatelessWidget {
   WelcomeScreen({super.key});
@@ -16,24 +17,24 @@ class WelcomeScreen extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                const SizedBox(height: 16),
+                SizedBox(height: 16.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     CustomSvgPicture.withoutFilterColor(
                       path: 'assets/images/logo.svg',
-                      width: 42,
-                      height: 42,
+                      width: 42.w,
+                      height: 42.h,
                     ),
 
-                    const SizedBox(width: 16),
+                    SizedBox(width: 16.w),
                     Text(
                       'Tasky',
                       style: Theme.of(context).textTheme.displayMedium,
                     ),
                   ],
                 ),
-                const SizedBox(height: 118),
+                SizedBox(height: 118.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -41,40 +42,40 @@ class WelcomeScreen extends StatelessWidget {
                       'Welcome To Tasky',
                       style: Theme.of(context).textTheme.displaySmall,
                     ),
-                    const SizedBox(width: 8),
+                    SizedBox(width: 8.w),
                     CustomSvgPicture.withoutFilterColor(
                       path: "assets/images/wave_hand.svg",
                     ),
                   ],
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: 8.h),
                 Text(
                   'Your productivity journey starts here.',
                   style: Theme.of(
                     context,
-                  ).textTheme.displaySmall!.copyWith(fontSize: 16),
+                  ).textTheme.displaySmall!.copyWith(fontSize: 16.sp),
                 ),
-                const SizedBox(height: 24),
+                SizedBox(height: 24.h),
                 CustomSvgPicture.withoutFilterColor(
                   path: 'assets/images/welcom.svg',
-                  width: 218,
-                  height: 205,
+                  width: 218.w,
+                  height: 205.h,
                 ),
 
-                const SizedBox(height: 24),
+                SizedBox(height: 24.h),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  padding: EdgeInsets.symmetric(horizontal: 16.0.w),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const SizedBox(height: 8),
+                      SizedBox(height: 8.h),
                       Text(
                         'Full Name',
                         style: Theme.of(
                           context,
                         ).textTheme.displaySmall!.copyWith(fontSize: 16),
                       ),
-                      const SizedBox(height: 8),
+                      SizedBox(height: 8.h),
 
                       TextFormFieldWidget(),
                     ],
