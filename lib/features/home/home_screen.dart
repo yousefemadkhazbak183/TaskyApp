@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_mastering_course/core/constants/app_sizes.dart';
 
 import 'package:flutter_mastering_course/core/widgets/custom_svg_picture.dart';
 import 'package:flutter_mastering_course/features/home/home_controller.dart';
@@ -50,7 +51,7 @@ class HomeScreen extends StatelessWidget {
                                   );
                                 },
                           ),
-                          const SizedBox(width: 8),
+                          SizedBox(width: AppSizes.pw8),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -79,7 +80,7 @@ class HomeScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 16),
+                      SizedBox(height: AppSizes.ph16),
 
                       Text(
                         'Yuhuu ,Your work Is ,',
@@ -97,12 +98,15 @@ class HomeScreen extends StatelessWidget {
                         ],
                       ),
 
-                      const SizedBox(height: 16),
+                      SizedBox(height: AppSizes.ph16),
                       const ArchivedTaskWidget(),
-                      const SizedBox(height: 8),
+                      SizedBox(height: AppSizes.ph8),
                       const HighPriorityTasks(),
                       Padding(
-                        padding: const EdgeInsets.only(top: 24, bottom: 16),
+                        padding: EdgeInsets.only(
+                          top: AppSizes.h24,
+                          bottom: AppSizes.w16,
+                        ),
                         child: Text(
                           'My Tasks',
                           style: Theme.of(
@@ -120,8 +124,8 @@ class HomeScreen extends StatelessWidget {
         ),
 
         floatingActionButton: SizedBox(
-          height: 44,
-          width: 168,
+          height: AppSizes.h44,
+          width: AppSizes.pw168,
           child: Builder(
             builder: (BuildContext context) {
               return FloatingActionButton.extended(
