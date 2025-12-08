@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mastering_course/core/constants/app_sizes.dart';
 import 'package:flutter_mastering_course/core/theme/theme_controller.dart';
 import 'package:flutter_mastering_course/core/widgets/custom_check_box.dart';
 
@@ -16,12 +17,12 @@ class HighPriorityTasks extends StatelessWidget {
       builder:
           (BuildContext context, TasksController controller, Widget? child) {
             return Container(
-              padding: const EdgeInsets.all(16),
+              padding: EdgeInsets.all(AppSizes.pw16),
               width: double.infinity,
 
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.primaryContainer,
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(AppSizes.r20),
                 border: Border.all(
                   color: ThemeController.isDark()
                       ? Colors.transparent
@@ -40,7 +41,7 @@ class HighPriorityTasks extends StatelessWidget {
                           'High Priority Tasks',
                           style: Theme.of(context).textTheme.headlineSmall,
                         ),
-                        const SizedBox(height: 8),
+                        SizedBox(height: AppSizes.h8),
                         ...controller.myTasks.reversed
                             .where((e) => e.isHighPriority)
                             .take(4)
@@ -85,9 +86,9 @@ class HighPriorityTasks extends StatelessWidget {
                       controller.init();
                     },
                     child: Container(
-                      padding: const EdgeInsets.all(8),
-                      height: 48,
-                      width: 48,
+                      padding: EdgeInsets.all(AppSizes.pw8),
+                      height: AppSizes.h56,
+                      width: AppSizes.h48,
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: Theme.of(context).colorScheme.inversePrimary,
@@ -97,6 +98,8 @@ class HighPriorityTasks extends StatelessWidget {
                       ),
                       child: SvgPicture.asset(
                         'assets/images/arrow_up_right.svg',
+                        height: AppSizes.h24,
+                        width: AppSizes.w24,
                         colorFilter: ColorFilter.mode(
                           ThemeController.isDark()
                               ? const Color(0xFFC6C6C6)

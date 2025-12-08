@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mastering_course/core/widgets/custom_color_svg.dart';
 import 'package:flutter_svg/svg.dart';
 
+// ignore: must_be_immutable
 class CustomSvgPicture extends StatelessWidget {
   CustomSvgPicture({
     super.key,

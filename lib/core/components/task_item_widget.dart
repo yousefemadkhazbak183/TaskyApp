@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_mastering_course/core/constants/app_sizes.dart';
 import 'package:flutter_mastering_course/core/constants/storage_keys.dart';
 import 'package:flutter_mastering_course/core/services/preferences_manager.dart';
 import 'package:flutter_mastering_course/core/theme/theme_controller.dart';
@@ -9,6 +10,7 @@ import 'package:flutter_mastering_course/core/enums/task_item_actions_enum.dart'
 import 'package:flutter_mastering_course/core/widgets/custom_text_form_field.dart';
 import 'package:flutter_mastering_course/model/task_model.dart';
 
+// ignore: must_be_immutable
 class TaskItemWidget extends StatelessWidget {
   TaskItemWidget({
     super.key,
@@ -25,11 +27,11 @@ class TaskItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      height: 56,
+      height: AppSizes.h56,
       width: double.infinity,
 
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(AppSizes.r20),
         color: Theme.of(context).colorScheme.primaryContainer,
         border: Border.all(
           color: ThemeController.isDark()
@@ -39,12 +41,12 @@ class TaskItemWidget extends StatelessWidget {
       ),
       child: Row(
         children: [
-          const SizedBox(width: 8),
+          SizedBox(width: AppSizes.w8),
           CustomCheckBox(
             value: model.isDone,
             onChanged: (bool? value) => onChanged(value),
           ),
-          const SizedBox(width: 16),
+          SizedBox(width: AppSizes.w16),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,7 +57,7 @@ class TaskItemWidget extends StatelessWidget {
                     color: model.isDone
                         ? Theme.of(context).colorScheme.secondary
                         : Theme.of(context).colorScheme.primary,
-                    fontSize: 16,
+                    fontSize: AppSizes.sp16,
                     decoration: model.isDone
                         ? TextDecoration.lineThrough
                         : TextDecoration.none,
@@ -66,9 +68,9 @@ class TaskItemWidget extends StatelessWidget {
                 ),
                 Text(
                   model.taskDescription,
-                  style: const TextStyle(
-                    color: Color(0xFC6C6C6F),
-                    fontSize: 14,
+                  style: TextStyle(
+                    color: const Color(0xFC6C6C6F),
+                    fontSize: AppSizes.sp14,
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
@@ -143,14 +145,13 @@ class TaskItemWidget extends StatelessWidget {
   }
 
   Future<bool?> _showButtonSheet(BuildContext context, TaskModel model) {
-    TextEditingController addTaskController = TextEditingController(
+    final TextEditingController addTaskController = TextEditingController(
       text: model.taskName,
     );
-    TextEditingController addTaskDescriptionController = TextEditingController(
-      text: model.taskDescription,
-    );
+    final TextEditingController addTaskDescriptionController =
+        TextEditingController(text: model.taskDescription);
 
-    GlobalKey<FormState> key = GlobalKey<FormState>();
+    final GlobalKey<FormState> key = GlobalKey<FormState>();
     bool isHighPriority = false;
 
     return showModalBottomSheet<bool>(
@@ -160,13 +161,16 @@ class TaskItemWidget extends StatelessWidget {
         return StatefulBuilder(
           builder: (BuildContext context, void Function(void Function()) setState) {
             return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              padding: EdgeInsets.symmetric(
+                horizontal: AppSizes.ph16,
+                vertical: AppSizes.ph8,
+              ),
               child: Form(
                 key: key,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(height: 8),
+                    SizedBox(height: AppSizes.ph8),
                     CustomTextFormField(
                       title: 'Task Name',
                       controller: addTaskController,
@@ -178,7 +182,7 @@ class TaskItemWidget extends StatelessWidget {
                         return null;
                       },
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: AppSizes.h20),
                     CustomTextFormField(
                       title: 'Task Description',
                       controller: addTaskDescriptionController,
@@ -186,7 +190,7 @@ class TaskItemWidget extends StatelessWidget {
                           'Finish onboarding UI and hand off to \n devs by Thursday.',
                       maxLines: 5,
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: AppSizes.h20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -209,7 +213,10 @@ class TaskItemWidget extends StatelessWidget {
                     // Spacer(),
                     ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
-                        fixedSize: Size(MediaQuery.of(context).size.width, 40),
+                        fixedSize: Size(
+                          MediaQuery.of(context).size.width,
+                          AppSizes.h40,
+                        ),
                       ),
                       onPressed: () async {
                         if (key.currentState?.validate() ?? false) {
@@ -221,7 +228,7 @@ class TaskItemWidget extends StatelessWidget {
                           if (taskJson != null) {
                             listTask = jsonDecode(taskJson);
                           }
-                          TaskModel newModel = TaskModel(
+                          final TaskModel newModel = TaskModel(
                             id: model.id,
                             taskName: addTaskController.text,
                             taskDescription: addTaskDescriptionController.text,
