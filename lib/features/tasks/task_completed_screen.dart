@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mastering_course/core/constants/app_sizes.dart';
 
 import 'package:flutter_mastering_course/features/tasks/controllers/tasks_controller.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +18,7 @@ class TaskCompletedScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.all(18.0),
+            padding: EdgeInsets.all(AppSizes.pw18),
             child: Text(
               'Completed Tasks',
               style: Theme.of(context).textTheme.bodyMedium,
@@ -25,7 +26,7 @@ class TaskCompletedScreen extends StatelessWidget {
           ),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.all(16),
+              padding: EdgeInsets.all(AppSizes.pw16),
               child: controller.isLoading
                   ? const Center(
                       child: CircularProgressIndicator(color: Colors.white),

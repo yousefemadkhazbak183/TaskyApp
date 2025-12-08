@@ -1,4 +1,5 @@
 import 'package:flutter_mastering_course/core/components/task_list_widgets.dart';
+import 'package:flutter_mastering_course/core/constants/app_sizes.dart';
 import 'package:flutter_mastering_course/features/tasks/controllers/tasks_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +15,7 @@ class TodoScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.all(18.0),
+            padding: EdgeInsets.all(AppSizes.pw18),
             child: Text(
               'To Do Tasks',
               style: Theme.of(context).textTheme.bodyMedium,
@@ -23,7 +24,7 @@ class TodoScreen extends StatelessWidget {
 
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.all(16),
+              padding: EdgeInsets.all(AppSizes.pw16),
               child: controller.isLoading
                   ? const Center(
                       child: CircularProgressIndicator(color: Colors.white),

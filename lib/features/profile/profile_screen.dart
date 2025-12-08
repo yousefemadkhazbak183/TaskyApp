@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_mastering_course/core/constants/app_sizes.dart';
 import 'package:flutter_mastering_course/core/constants/storage_keys.dart';
 import 'package:flutter_mastering_course/core/services/preferences_manager.dart';
 import 'package:flutter_mastering_course/core/theme/theme_controller.dart';
@@ -47,18 +48,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ? const Center(child: CircularProgressIndicator())
         : SafeArea(
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: EdgeInsets.all(AppSizes.pw16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
+                    padding: EdgeInsets.only(top: AppSizes.h8),
                     child: Text(
                       'My Profile',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: AppSizes.ph16),
                   Center(
                     child: Column(
                       children: [
@@ -71,7 +72,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       'assets/images/profile.png',
                                     )
                                   : FileImage(File(imagePath!)),
-                              radius: 60,
+                              radius: AppSizes.r60,
                               backgroundColor: Colors.transparent,
                             ),
 
@@ -86,10 +87,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 });
                               },
                               child: Container(
-                                width: 45,
-                                height: 45,
+                                width: AppSizes.w45,
+                                height: AppSizes.h45,
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(100),
+                                  borderRadius: BorderRadius.circular(
+                                    AppSizes.r100,
+                                  ),
                                   color: ThemeController.isDark()
                                       ? const Color(0xFF282828)
                                       : const Color(0xFFFFFFFF),
@@ -99,7 +102,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 6),
+                        SizedBox(height: AppSizes.h6),
                         Text(
                           username,
                           style: Theme.of(context).textTheme.bodyMedium,
@@ -113,13 +116,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 24),
+                  SizedBox(height: AppSizes.h24),
                   Text(
                     'Profile Info',
 
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: AppSizes.h16),
                   ListTile(
                     onTap: () async {
                       final result = await Navigator.push(
@@ -153,9 +156,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
 
-                  const SizedBox(height: 18),
+                  SizedBox(height: AppSizes.h18),
                   const Divider(thickness: 1),
-                  const SizedBox(height: 13),
+                  SizedBox(height: AppSizes.h13),
                   ListTile(
                     contentPadding: EdgeInsets.zero,
                     title: Text(
@@ -179,9 +182,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       },
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: AppSizes.h8),
                   const Divider(thickness: 1),
-                  const SizedBox(height: 20),
+                  SizedBox(height: AppSizes.h20),
                   ListTile(
                     onTap: () async {
                       PreferencesManager().remove(StorageKeys.username);
@@ -239,42 +242,42 @@ void _showDialogImagePicker(
         ),
         children: [
           SimpleDialogOption(
-            padding: const EdgeInsets.all(16),
+            padding: EdgeInsets.all(AppSizes.pw16),
             onPressed: () async {
               Navigator.pop(context);
 
-              XFile? image = await ImagePicker().pickImage(
+              final XFile? image = await ImagePicker().pickImage(
                 source: ImageSource.camera,
               );
               if (image != null) {
                 selectedImage(image);
               }
             },
-            child: const Row(
+            child: Row(
               children: [
-                Icon(Icons.camera_alt),
-                SizedBox(height: 8),
-                Text('Camera'),
+                const Icon(Icons.camera_alt),
+                SizedBox(height: AppSizes.h8),
+                const Text('Camera'),
               ],
             ),
           ),
           SimpleDialogOption(
-            padding: const EdgeInsets.all(16),
+            padding: EdgeInsets.all(AppSizes.pw16),
 
             onPressed: () async {
               Navigator.pop(context);
-              XFile? image = await ImagePicker().pickImage(
+              final XFile? image = await ImagePicker().pickImage(
                 source: ImageSource.gallery,
               );
               if (image != null) {
                 selectedImage(image);
               }
             },
-            child: const Row(
+            child: Row(
               children: [
-                Icon(Icons.photo_library),
-                SizedBox(height: 8),
-                Text('Gallery'),
+                const Icon(Icons.photo_library),
+                SizedBox(height: AppSizes.h8),
+                const Text('Gallery'),
               ],
             ),
           ),

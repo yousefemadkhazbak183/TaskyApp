@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mastering_course/core/constants/app_sizes.dart';
 
 import 'package:flutter_mastering_course/core/widgets/custom_text_form_field.dart';
 import 'package:flutter_mastering_course/features/add_tasks/add_task_controller.dart';
@@ -90,7 +91,10 @@ class AddTaskScreen extends StatelessWidget {
                     ),
                     ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
-                        fixedSize: Size(MediaQuery.of(context).size.width, 40),
+                        fixedSize: Size(
+                          MediaQuery.of(context).size.width,
+                          AppSizes.h40,
+                        ),
                       ),
                       onPressed: () async {
                         context.read<AddTaskController>().addTask(context);
