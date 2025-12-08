@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mastering_course/core/constants/app_sizes.dart';
 import 'package:flutter_mastering_course/core/constants/storage_keys.dart';
 import 'package:flutter_mastering_course/core/services/preferences_manager.dart';
 import 'package:flutter_mastering_course/core/widgets/custom_text_form_field.dart';
@@ -43,7 +44,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(AppSizes.pw16),
         child: Form(
           key: _formKey,
           child: Column(
@@ -59,7 +60,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                   return null;
                 },
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: AppSizes.h20),
               CustomTextFormField(
                 hintText: 'One task at a time. One step closer.',
                 controller: motivationQuoteController,
@@ -74,10 +75,13 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
               ),
               const Spacer(),
               Padding(
-                padding: const EdgeInsets.only(bottom: 11),
+                padding: EdgeInsets.only(bottom: AppSizes.h11),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    fixedSize: Size(MediaQuery.of(context).size.width, 40),
+                    fixedSize: Size(
+                      MediaQuery.of(context).size.width,
+                      AppSizes.h40,
+                    ),
                   ),
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {

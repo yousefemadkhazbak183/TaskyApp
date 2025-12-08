@@ -24,7 +24,7 @@ class HomeScreen extends StatelessWidget {
       child: Scaffold(
         body: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: EdgeInsets.all(AppSizes.pw16),
             child: CustomScrollView(
               slivers: [
                 SliverToBoxAdapter(

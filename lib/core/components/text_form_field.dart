@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mastering_course/core/constants/app_sizes.dart';
 import 'package:flutter_mastering_course/core/services/preferences_manager.dart';
 import 'package:flutter_mastering_course/features/navigation/main_screen.dart';
 
@@ -26,10 +27,10 @@ class TextFormFieldWidget extends StatelessWidget {
               return null;
             },
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: AppSizes.h24),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              fixedSize: Size(MediaQuery.of(context).size.width, 40),
+              fixedSize: Size(MediaQuery.of(context).size.width, AppSizes.h40),
             ),
             onPressed: () async {
               if (_key.currentState?.validate() ?? false) {
@@ -37,10 +38,7 @@ class TextFormFieldWidget extends StatelessWidget {
                   'username',
                   controller.value.text,
                 );
-                final String? username = PreferencesManager().getString(
-                  'username',
-                );
-                print(username);
+                PreferencesManager().getString('username');
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
