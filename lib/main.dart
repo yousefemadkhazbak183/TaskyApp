@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mastering_course/core/services/file_storage_manager.dart';
 import 'package:flutter_mastering_course/core/services/preferences_manager.dart';
 import 'package:flutter_mastering_course/core/theme/dark_theme.dart';
 import 'package:flutter_mastering_course/core/theme/light_theme.dart';
@@ -15,7 +16,7 @@ void main() async {
   await PreferencesManager().init();
   ThemeController().init();
   final String? username = PreferencesManager().getString('username');
-
+  await FileStorageManager().init();
   runApp(MyApp(username: username));
 }
 
