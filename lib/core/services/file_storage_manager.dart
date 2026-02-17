@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:path_provider/path_provider.dart';
@@ -18,5 +19,16 @@ class FileStorageManager {
     _appDocumentsDirectory = await getApplicationDocumentsDirectory();
 
     _path = File("${_appDocumentsDirectory.path}/tasks.json");
+  }
+
+  Future<void> saveTasks(List<dynamic> list) async {
+    final listJson = jsonEncode(list);
+
+    await _path.writeAsString(listJson);
+  }
+
+  Future<List<dynamic>> loadTask() async {
+    final tasksJson = await _path.readAsString();
+    return jsonDecode(tasksJson) as List<dynamic>;
   }
 }
