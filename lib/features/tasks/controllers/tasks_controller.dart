@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_mastering_course/core/constants/storage_keys.dart';
+import 'package:flutter_mastering_course/core/services/file_storage_manager.dart';
 import 'package:flutter_mastering_course/core/services/preferences_manager.dart';
 import 'package:flutter_mastering_course/model/task_model.dart';
 
@@ -25,18 +26,16 @@ class TasksController with ChangeNotifier {
   }
 
   ///[_loadTasks]
-  void _loadTasks() {
+  Future<void> _loadTasks() async {
     isLoading = true;
 
-    final finalTasks = PreferencesManager().getString(StorageKeys.task);
-    if (finalTasks != null) {
-      final taskAfterDecode = jsonDecode(finalTasks) as List<dynamic>;
-      myTasks = taskAfterDecode.map((e) => TaskModel.fromJson(e)).toList();
+    final taskData = await FileStorageManager().loadTask();
 
-      _loadData();
+    myTasks = taskData.map((e) => TaskModel.fromJson(e)).toList();
 
-      _calculatePercent();
-    }
+    _loadData();
+
+    _calculatePercent();
 
     isLoading = false;
     notifyListeners();
