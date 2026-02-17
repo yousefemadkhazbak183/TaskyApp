@@ -1,9 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_mastering_course/core/constants/storage_keys.dart';
+
 import 'package:flutter_mastering_course/core/services/file_storage_manager.dart';
-import 'package:flutter_mastering_course/core/services/preferences_manager.dart';
 import 'package:flutter_mastering_course/model/task_model.dart';
 
 class TasksController with ChangeNotifier {
@@ -44,9 +41,7 @@ class TasksController with ChangeNotifier {
   void _loadData() {
     todoTasks = myTasks.where((element) => !element.isDone).toList();
     completeTasks = myTasks.where((element) => element.isDone).toList();
-    highPriorityTasks = myTasks
-        .where((element) => element.isHighPriority)
-        .toList();
+    highPriorityTasks = myTasks.where((element) => element.isHighPriority).toList();
     highPriorityTasks = highPriorityTasks.reversed.toList();
   }
 
@@ -59,10 +54,7 @@ class TasksController with ChangeNotifier {
     _loadData();
     _calculatePercent();
     final updatedTask = myTasks.map((element) => element.toJson()).toList();
-    await PreferencesManager().setString(
-      StorageKeys.task,
-      jsonEncode(updatedTask),
-    );
+    FileStorageManager().saveTasks(updatedTask);
 
     notifyListeners();
   }
@@ -74,7 +66,8 @@ class TasksController with ChangeNotifier {
     _loadData();
     _calculatePercent();
     final updatedTask = myTasks.map((e) => e.toJson()).toList();
-    PreferencesManager().setString(StorageKeys.task, jsonEncode(updatedTask));
+
+    FileStorageManager().saveTasks(updatedTask);
 
     notifyListeners();
   }
