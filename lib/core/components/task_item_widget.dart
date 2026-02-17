@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_mastering_course/core/constants/app_sizes.dart';
 import 'package:flutter_mastering_course/core/constants/storage_keys.dart';
+import 'package:flutter_mastering_course/core/services/file_storage_manager.dart';
 import 'package:flutter_mastering_course/core/services/preferences_manager.dart';
 import 'package:flutter_mastering_course/core/theme/theme_controller.dart';
 import 'package:flutter_mastering_course/core/widgets/custom_check_box.dart';
@@ -34,9 +35,7 @@ class TaskItemWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppSizes.r20),
         color: Theme.of(context).colorScheme.primaryContainer,
         border: Border.all(
-          color: ThemeController.isDark()
-              ? Colors.transparent
-              : const Color(0xFFD1DAD6),
+          color: ThemeController.isDark() ? Colors.transparent : const Color(0xFFD1DAD6),
         ),
       ),
       child: Row(
@@ -81,12 +80,8 @@ class TaskItemWidget extends StatelessWidget {
             icon: Icon(
               Icons.more_vert,
               color: ThemeController.isDark()
-                  ? (model.isDone
-                        ? const Color(0xFFA0A0A0)
-                        : const Color(0xFFC6C6C6))
-                  : (model.isDone
-                        ? const Color(0xFF6A6A6A)
-                        : const Color(0XFF3A4640)),
+                  ? (model.isDone ? const Color(0xFFA0A0A0) : const Color(0xFFC6C6C6))
+                  : (model.isDone ? const Color(0xFF6A6A6A) : const Color(0XFF3A4640)),
             ),
             onSelected: (value) async {
               switch (value) {
@@ -102,10 +97,7 @@ class TaskItemWidget extends StatelessWidget {
               }
             },
             itemBuilder: (context) => TaskItemActionsEnum.values.map((e) {
-              return PopupMenuItem<TaskItemActionsEnum>(
-                value: e,
-                child: Text(e.name),
-              );
+              return PopupMenuItem<TaskItemActionsEnum>(value: e, child: Text(e.name));
             }).toList(),
           ),
         ],
@@ -148,8 +140,9 @@ class TaskItemWidget extends StatelessWidget {
     final TextEditingController addTaskController = TextEditingController(
       text: model.taskName,
     );
-    final TextEditingController addTaskDescriptionController =
-        TextEditingController(text: model.taskDescription);
+    final TextEditingController addTaskDescriptionController = TextEditingController(
+      text: model.taskDescription,
+    );
 
     final GlobalKey<FormState> key = GlobalKey<FormState>();
     bool isHighPriority = false;
@@ -213,21 +206,12 @@ class TaskItemWidget extends StatelessWidget {
                     // Spacer(),
                     ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
-                        fixedSize: Size(
-                          MediaQuery.of(context).size.width,
-                          AppSizes.h40,
-                        ),
+                        fixedSize: Size(MediaQuery.of(context).size.width, AppSizes.h40),
                       ),
                       onPressed: () async {
                         if (key.currentState?.validate() ?? false) {
-                          final taskJson = PreferencesManager().getString(
-                            StorageKeys.task,
-                          );
+                          List<dynamic> listTask = await FileStorageManager().loadTask();
 
-                          List<dynamic> listTask = [];
-                          if (taskJson != null) {
-                            listTask = jsonDecode(taskJson);
-                          }
                           final TaskModel newModel = TaskModel(
                             id: model.id,
                             taskName: addTaskController.text,
@@ -236,9 +220,7 @@ class TaskItemWidget extends StatelessWidget {
                             isDone: model.isDone,
                           );
 
-                          final item = listTask.firstWhere(
-                            (e) => e['id'] == model.id,
-                          );
+                          final item = listTask.firstWhere((e) => e['id'] == model.id);
                           final int index = listTask.indexOf(item);
                           listTask[index] = newModel;
 
