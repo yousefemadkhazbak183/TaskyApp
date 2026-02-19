@@ -41,7 +41,9 @@ class TasksController with ChangeNotifier {
   void _loadData() {
     todoTasks = myTasks.where((element) => !element.isDone).toList();
     completeTasks = myTasks.where((element) => element.isDone).toList();
-    highPriorityTasks = myTasks.where((element) => element.isHighPriority).toList();
+    highPriorityTasks = myTasks
+        .where((element) => element.isHighPriority)
+        .toList();
     highPriorityTasks = highPriorityTasks.reversed.toList();
   }
 
@@ -78,5 +80,9 @@ class TasksController with ChangeNotifier {
     percent = totalDoneTasks == 0 ? 0 : totalDoneTasks / totalTasks;
 
     notifyListeners();
+  }
+
+  clear() {
+    _loadTasks();
   }
 }
