@@ -34,6 +34,8 @@ class FileStorageManager {
   }
 
   Future<void> clearTasks() async {
+    if (!await _path.exists()) return;
+
     await _path.delete();
   }
 }
