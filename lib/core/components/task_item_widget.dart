@@ -210,7 +210,8 @@ class TaskItemWidget extends StatelessWidget {
                       ),
                       onPressed: () async {
                         if (key.currentState?.validate() ?? false) {
-                          List<dynamic> listTask = await FileStorageManager().loadTask();
+                          final List<dynamic> listTask = await FileStorageManager()
+                              .loadTask();
 
                           final TaskModel newModel = TaskModel(
                             id: model.id,
@@ -224,11 +225,8 @@ class TaskItemWidget extends StatelessWidget {
                           final int index = listTask.indexOf(item);
                           listTask[index] = newModel;
 
-                          final taskEncode = jsonEncode(listTask);
-                          await PreferencesManager().setString(
-                            StorageKeys.task,
-                            taskEncode,
-                          );
+                          await FileStorageManager().saveTasks(listTask);
+
                           Navigator.of(context).pop(true);
                         }
                       },

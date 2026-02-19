@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_mastering_course/core/constants/app_sizes.dart';
 import 'package:flutter_mastering_course/core/constants/storage_keys.dart';
+import 'package:flutter_mastering_course/core/services/file_storage_manager.dart';
 import 'package:flutter_mastering_course/core/services/preferences_manager.dart';
 import 'package:flutter_mastering_course/core/theme/theme_controller.dart';
 import 'package:flutter_mastering_course/core/widgets/custom_svg_picture.dart';
@@ -34,9 +35,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void _loadUsername() async {
     setState(() {
       username = PreferencesManager().getString(StorageKeys.username) ?? '';
-      motivationQuote = PreferencesManager().getString(
-        StorageKeys.motivationQuote,
-      );
+      motivationQuote = PreferencesManager().getString(StorageKeys.motivationQuote);
       imagePath = PreferencesManager().getString(StorageKeys.imagePath);
       isLoading = false;
     });
@@ -68,9 +67,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           children: [
                             CircleAvatar(
                               backgroundImage: imagePath == null
-                                  ? const AssetImage(
-                                      'assets/images/profile.png',
-                                    )
+                                  ? const AssetImage('assets/images/profile.png')
                                   : FileImage(File(imagePath!)),
                               radius: AppSizes.r60,
                               backgroundColor: Colors.transparent,
@@ -90,9 +87,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 width: AppSizes.w45,
                                 height: AppSizes.h45,
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(
-                                    AppSizes.r100,
-                                  ),
+                                  borderRadius: BorderRadius.circular(AppSizes.r100),
                                   color: ThemeController.isDark()
                                       ? const Color(0xFF282828)
                                       : const Color(0xFFFFFFFF),
@@ -103,25 +98,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ],
                         ),
                         SizedBox(height: AppSizes.h6),
-                        Text(
-                          username,
-                          style: Theme.of(context).textTheme.bodyMedium,
-                        ),
+                        Text(username, style: Theme.of(context).textTheme.bodyMedium),
 
                         Text(
-                          motivationQuote ??
-                              'One task at a time. One step closer.',
+                          motivationQuote ?? 'One task at a time. One step closer.',
                           style: Theme.of(context).textTheme.titleSmall,
                         ),
                       ],
                     ),
                   ),
                   SizedBox(height: AppSizes.h24),
-                  Text(
-                    'Profile Info',
-
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
+                  Text('Profile Info', style: Theme.of(context).textTheme.bodyMedium),
                   SizedBox(height: AppSizes.h16),
                   ListTile(
                     onTap: () async {
@@ -189,7 +176,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     onTap: () async {
                       PreferencesManager().remove(StorageKeys.username);
                       PreferencesManager().remove(StorageKeys.motivationQuote);
-                      PreferencesManager().remove(StorageKeys.task);
+
+                      await FileStorageManager().clearTasks();
+
                       Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
@@ -228,18 +217,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 }
 
-void _showDialogImagePicker(
-  BuildContext context,
-  Function(XFile) selectedImage,
-) {
+void _showDialogImagePicker(BuildContext context, Function(XFile) selectedImage) {
   showDialog(
     context: context,
     builder: (context) {
       return SimpleDialog(
-        title: Text(
-          'Choose Image',
-          style: Theme.of(context).textTheme.displayLarge,
-        ),
+        title: Text('Choose Image', style: Theme.of(context).textTheme.displayLarge),
         children: [
           SimpleDialogOption(
             padding: EdgeInsets.all(AppSizes.pw16),
