@@ -1,10 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_mastering_course/core/constants/app_sizes.dart';
-import 'package:flutter_mastering_course/core/constants/storage_keys.dart';
-import 'package:flutter_mastering_course/core/services/file_storage_manager.dart';
-import 'package:flutter_mastering_course/core/services/preferences_manager.dart';
+import 'package:flutter_mastering_course/core/services/hive_storage_manager.dart';
 import 'package:flutter_mastering_course/core/theme/theme_controller.dart';
 import 'package:flutter_mastering_course/core/widgets/custom_check_box.dart';
 import 'package:flutter_mastering_course/core/enums/task_item_actions_enum.dart';
@@ -210,7 +206,7 @@ class TaskItemWidget extends StatelessWidget {
                       ),
                       onPressed: () async {
                         if (key.currentState?.validate() ?? false) {
-                          final List<dynamic> listTask = await FileStorageManager()
+                          final List<TaskModel> listTask = HiveStorageManager()
                               .loadTask();
 
                           final TaskModel newModel = TaskModel(
@@ -221,11 +217,11 @@ class TaskItemWidget extends StatelessWidget {
                             isDone: model.isDone,
                           );
 
-                          final item = listTask.firstWhere((e) => e['id'] == model.id);
+                          final item = listTask.firstWhere((e) => e.id == model.id);
                           final int index = listTask.indexOf(item);
                           listTask[index] = newModel;
 
-                          await FileStorageManager().saveTasks(listTask);
+                          await HiveStorageManager().saveTasks(listTask);
 
                           Navigator.of(context).pop(true);
                         }

@@ -1,8 +1,18 @@
+import 'package:hive_ce/hive.dart';
+
+part 'task_model.g.dart';
+
+@HiveType(typeId: 0)
 class TaskModel {
+  @HiveField(0)
   final int id;
+  @HiveField(1)
   final String taskName;
+  @HiveField(2)
   final String taskDescription;
+  @HiveField(3)
   final bool isHighPriority;
+  @HiveField(4)
   bool isDone;
 
   TaskModel({

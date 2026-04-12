@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_mastering_course/core/services/file_storage_manager.dart';
+import 'package:flutter_mastering_course/core/services/hive_storage_manager.dart';
 import 'package:flutter_mastering_course/model/task_model.dart';
 
 class TasksController with ChangeNotifier {
@@ -26,9 +26,7 @@ class TasksController with ChangeNotifier {
   Future<void> _loadTasks() async {
     isLoading = true;
 
-    final taskData = await FileStorageManager().loadTask();
-
-    myTasks = taskData.map((e) => TaskModel.fromJson(e)).toList();
+    myTasks = HiveStorageManager().loadTask();
 
     _loadData();
 
@@ -41,9 +39,7 @@ class TasksController with ChangeNotifier {
   void _loadData() {
     todoTasks = myTasks.where((element) => !element.isDone).toList();
     completeTasks = myTasks.where((element) => element.isDone).toList();
-    highPriorityTasks = myTasks
-        .where((element) => element.isHighPriority)
-        .toList();
+    highPriorityTasks = myTasks.where((element) => element.isHighPriority).toList();
     highPriorityTasks = highPriorityTasks.reversed.toList();
   }
 
@@ -55,8 +51,7 @@ class TasksController with ChangeNotifier {
 
     _loadData();
     _calculatePercent();
-    final updatedTask = myTasks.map((element) => element.toJson()).toList();
-    FileStorageManager().saveTasks(updatedTask);
+    HiveStorageManager().saveTasks(myTasks);
 
     notifyListeners();
   }
@@ -67,9 +62,8 @@ class TasksController with ChangeNotifier {
     myTasks[index].isDone = value ?? false;
     _loadData();
     _calculatePercent();
-    final updatedTask = myTasks.map((e) => e.toJson()).toList();
 
-    FileStorageManager().saveTasks(updatedTask);
+    HiveStorageManager().saveTasks(myTasks);
 
     notifyListeners();
   }
